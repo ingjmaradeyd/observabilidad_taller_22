@@ -1,0 +1,50 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+
+scrape_configs:
+
+  # ==========================================================
+  # MÉTRICAS DE NEGOCIO/APLICACIÓN
+  # ==========================================================
+  #
+  # Recibe las métricas que Service A y Service B enviaron
+  # mediante OTLP al Collector.
+  #
+  # Ejemplos:
+  # pedidos_creados
+  # pedidos_fallidos
+  # pedido_creacion_duracion
+  # clientes_consultados
+  # clientes_no_encontrados
+  # consulta_cliente_duracion
+  #
+  - job_name: "otel-app-metrics"
+
+    scrape_interval: 5s
+
+    static_configs:
+      - targets:
+          - "otel-collector:8889"
+
+
+  # ==========================================================
+  # MÉTRICAS INTERNAS DEL OTEL COLLECTOR
+  # ==========================================================
+  #
+  # Permite monitorear el propio Collector:
+  #
+  # received spans
+  # exported spans
+  # failed exports
+  # refused telemetry
+  # etc.
+  #
+  - job_name: "otel-collector-internal"
+
+    scrape_interval: 5s
+
+    static_configs:
+      - targets:
+          - "otel-collector:8888"

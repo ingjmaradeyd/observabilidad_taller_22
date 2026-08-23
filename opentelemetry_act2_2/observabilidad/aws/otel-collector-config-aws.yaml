@@ -1,0 +1,100 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+
+processors:
+
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 400
+    spike_limit_mib: 80
+
+  resource:
+    attributes:
+      - key: deployment.environment
+        value: aws
+        action: upsert
+
+      - key: telemetry.platform
+        value: ecs-fargate
+        action: upsert
+
+      - key: cloud.provider
+        value: aws
+        action: upsert
+
+  batch:
+    timeout: 5s
+    send_batch_size: 200
+
+
+extensions:
+
+  sigv4auth/logs:
+    region: ${env:AWS_REGION}
+    service: logs
+
+  sigv4auth/metrics:
+    region: ${env:AWS_REGION}
+    service: monitoring
+
+  sigv4auth/traces:
+    region: ${env:AWS_REGION}
+    service: xray
+
+
+exporters:
+
+  otlphttp/logs:
+    logs_endpoint: https://logs.${env:AWS_REGION}.amazonaws.com/v1/logs
+
+    headers:
+      x-aws-log-group: ${env:OTEL_LOG_GROUP}
+      x-aws-log-stream: ${env:OTEL_LOG_STREAM}
+
+    auth:
+      authenticator: sigv4auth/logs
+
+
+  otlphttp/metrics:
+    metrics_endpoint: https://monitoring.${env:AWS_REGION}.amazonaws.com/v1/metrics
+
+    auth:
+      authenticator: sigv4auth/metrics
+
+
+  otlphttp/traces:
+    traces_endpoint: https://xray.${env:AWS_REGION}.amazonaws.com/v1/traces
+
+    auth:
+      authenticator: sigv4auth/traces
+
+
+service:
+
+  extensions:
+    - sigv4auth/logs
+    - sigv4auth/metrics
+    - sigv4auth/traces
+
+  pipelines:
+
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, resource, batch]
+      exporters: [otlphttp/traces]
+
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, resource, batch]
+      exporters: [otlphttp/metrics]
+
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, resource, batch]
+      exporters: [otlphttp/logs]

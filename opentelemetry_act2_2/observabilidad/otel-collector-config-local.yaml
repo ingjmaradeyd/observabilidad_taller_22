@@ -1,0 +1,101 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 256
+    spike_limit_mib: 64
+
+  resource:
+    attributes:
+      - key: deployment.environment
+        value: lab
+        action: upsert
+
+      - key: telemetry.platform
+        value: local
+        action: upsert
+
+  batch:
+
+
+exporters:
+  # Permite ver en los logs del Collector todo lo que está recibiendo.
+  debug:
+    verbosity: detailed
+
+  # Trazas -> Jaeger
+  otlp_grpc/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+
+  # Métricas de servicio -> endpoint Prometheus :8889
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+
+  # Logs -> Loki mediante OTLP/HTTP
+  otlp_http/loki:
+    endpoint: http://loki:3100/otlp
+
+
+service:
+
+  # Métricas internas del propio OTel Collector.
+  # Prometheus las consultará en :8888.
+  telemetry:
+    metrics:
+      readers:
+        - pull:
+            exporter:
+              prometheus:
+                host: 0.0.0.0
+                port: 8888
+
+  pipelines:
+
+    # TRACES
+    # Service A/B -> Collector -> Jaeger
+    traces:
+      receivers:
+        - otlp
+      processors:
+        - memory_limiter
+        - resource
+        - batch
+      exporters:
+        - debug
+        - otlp_grpc/jaeger
+
+    # METRICS
+    # Service A/B -> Collector -> Prometheus
+    metrics:
+      receivers:
+        - otlp
+      processors:
+        - memory_limiter
+        - resource
+        - batch
+      exporters:
+        - debug
+        - prometheus
+
+    # LOGS
+    # Service A/B -> Collector -> Loki
+    logs:
+      receivers:
+        - otlp
+      processors:
+        - memory_limiter
+        - resource
+        - batch
+      exporters:
+        - debug
+        - otlp_http/loki
