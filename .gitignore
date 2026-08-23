@@ -1,0 +1,69 @@
+# ==============================
+# Terraform
+# ==============================
+
+**/.terraform/*
+
+*.tfstate
+*.tfstate.*
+*.tfplan
+
+crash.log
+crash.*.log
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+.terraformrc
+terraform.rc
+
+# Variables con posibles secretos
+*.tfvars
+*.tfvars.json
+
+# ==============================
+# Python
+# ==============================
+
+__pycache__/
+*.py[cod]
+*.pyo
+
+.venv/
+venv/
+env/
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ==============================
+# IDE
+# ==============================
+
+.idea/
+.vscode/
+
+# ==============================
+# macOS
+# ==============================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ==============================
+# Logs
+# ==============================
+
+*.log
+
+# ==============================
+# Environment / secrets
+# ==============================
+
+.env
+.env.*
+!.env.example
