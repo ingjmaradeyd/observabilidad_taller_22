@@ -1,0 +1,130 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: opentelemetry_bd
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123456789"
+    volumes:
+      - gameday-postgres-data:/var/lib/postgresql/data
+      - ../gameday/db/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d opentelemetry_bd"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+    networks:
+      - default
+
+  service-b:
+    build:
+      context: ../servicio-b
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: opentelemetry_bd
+      DB_USER: postgres
+      DB_PASSWORD: "123456789"
+      OTEL_ENABLED: "true"
+      OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector:4317
+    ports:
+      - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      otel-collector:
+        condition: service_started
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=2)
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+    networks:
+      default:
+      chaos-ab:
+        aliases:
+          - service-b-chaos
+
+  service-a:
+    build:
+      context: ../servicio-a
+      dockerfile: Dockerfile.gameday
+    cap_add:
+      - NET_ADMIN
+    environment:
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: opentelemetry_bd
+      DB_USER: postgres
+      DB_PASSWORD: "123456789"
+      SERVICE_B_URL: http://service-b-chaos:8001
+      OTEL_ENABLED: "true"
+      OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector:4317
+    volumes:
+      - ../gameday/chaos/latency-a-to-b.sh:/opt/gameday/latency-a-to-b.sh:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      service-b:
+        condition: service_healthy
+      otel-collector:
+        condition: service_started
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+    networks:
+      - default
+      - chaos-ab
+
+  k6:
+    image: grafana/k6:latest
+    user: "${K6_UID:-0}:${K6_GID:-0}"
+    environment:
+      BASE_URL: http://service-a:8000
+      TEST_MODE: ${TEST_MODE:-baseline}
+    volumes:
+      - ../gameday/k6/pedidos.js:/scripts/pedidos.js:ro
+      - ../gameday/results:/results
+    command:
+      - run
+      - --out
+      - json=/results/${K6_RESULT_FILE:-pedidos-results.json}
+      - /scripts/pedidos.js
+    depends_on:
+      service-a:
+        condition: service_healthy
+    profiles:
+      - load
+    networks:
+      - default
+
+  grafana:
+    container_name: observabilidad-grafana
+    volumes:
+      - ../gameday/grafana/provisioning/datasources/datasources.yml:/etc/grafana/provisioning/datasources/gameday.yml:ro
+
+  prometheus:
+    container_name: observabilidad-prometheus
+
+networks:
+  chaos-ab:
+    internal: true
+
+volumes:
+  gameday-postgres-data:
