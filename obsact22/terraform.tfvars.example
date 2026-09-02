@@ -8,11 +8,19 @@ service_b_port = 8001
 service_a_health_path = "/health"
 service_b_health_path = "/health"
 
+# Use one immutable version across the four images for a reproducible release.
+# Accepted values: a 7-12 character lowercase Git SHA or v1.0.0.
+service_a_image_tag    = "abcdef1"
+service_b_image_tag    = "abcdef1"
+data_service_image_tag = "abcdef1"
+adot_image_tag         = "abcdef1"
+
 # IMPORTANT:
 # Keep both at 0 for the first apply, because ECR starts empty.
 # After pushing the two Docker images, change them to 2 and apply again.
 service_a_desired_count = 0
 service_b_desired_count = 0
+adot_desired_count         = 0
 
 db_name     = "appdb"
 db_username = "appadmin"

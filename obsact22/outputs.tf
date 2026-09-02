@@ -30,6 +30,11 @@ output "service_b_ecr_repository_url" {
   value = aws_ecr_repository.service_b.repository_url
 }
 
+output "data_service_ecr_repository_url" {
+  description = "ECR repository URL for data-service."
+  value       = aws_ecr_repository.data_service.repository_url
+}
+
 output "ecs_cluster_name" {
   value = aws_ecs_cluster.main.name
 }

@@ -40,6 +40,16 @@ variable "private_db_subnet_cidrs" {
   default     = ["10.20.21.0/24", "10.20.22.0/24"]
 }
 
+variable "data_service_image_tag" {
+  description = "Immutable ECR image tag for data-service, using a short Git SHA for development or v1.0.0 for the final release."
+  type        = string
+
+  validation {
+    condition     = can(regex("^([0-9a-f]{7,12}|v1\\.0\\.0)$", var.data_service_image_tag))
+    error_message = "data-service image tag must be a 7-12 character lowercase Git SHA or v1.0.0; empty and latest are not allowed."
+  }
+}
+
 variable "service_a_port" {
   description = "HTTP port exposed by service A."
   type        = number
@@ -65,15 +75,23 @@ variable "service_b_health_path" {
 }
 
 variable "service_a_image_tag" {
-  description = "ECR image tag for service A."
+  description = "Immutable ECR image tag for service A, using a short Git SHA for development or v1.0.0 for the final release."
   type        = string
-  default     = "latest"
+
+  validation {
+    condition     = can(regex("^([0-9a-f]{7,12}|v1\\.0\\.0)$", var.service_a_image_tag))
+    error_message = "Service A image tag must be a 7-12 character lowercase Git SHA or v1.0.0; empty and latest are not allowed."
+  }
 }
 
 variable "service_b_image_tag" {
-  description = "ECR image tag for service B."
+  description = "Immutable ECR image tag for service B, using a short Git SHA for development or v1.0.0 for the final release."
   type        = string
-  default     = "latest"
+
+  validation {
+    condition     = can(regex("^([0-9a-f]{7,12}|v1\\.0\\.0)$", var.service_b_image_tag))
+    error_message = "Service B image tag must be a 7-12 character lowercase Git SHA or v1.0.0; empty and latest are not allowed."
+  }
 }
 
 variable "service_a_desired_count" {
@@ -136,6 +154,16 @@ variable "adot_cpu" {
   default     = 256
 }
 
+variable "adot_image_tag" {
+  description = "Immutable ECR image tag for ADOT Collector, using a short Git SHA for development or v1.0.0 for the final release."
+  type        = string
+
+  validation {
+    condition     = can(regex("^([0-9a-f]{7,12}|v1\\.0\\.0)$", var.adot_image_tag))
+    error_message = "ADOT Collector image tag must be a 7-12 character lowercase Git SHA or v1.0.0; empty and latest are not allowed."
+  }
+}
+
 variable "adot_memory" {
   description = "Memory assigned to ADOT Collector"
   type        = number
@@ -145,5 +173,5 @@ variable "adot_memory" {
 variable "adot_desired_count" {
   description = "Number of ADOT Collector tasks"
   type        = number
-  default     = 1
+  default     = 0
 }

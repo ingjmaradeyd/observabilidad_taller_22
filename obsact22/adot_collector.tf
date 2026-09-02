@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "adot" {
 
       name = "adot-collector"
 
-      image = "${aws_ecr_repository.adot_collector.repository_url}:latest"
+      image = "${aws_ecr_repository.adot_collector.repository_url}:${var.adot_image_tag}"
 
       essential = true
 
@@ -96,6 +96,11 @@ resource "aws_ecs_task_definition" "adot" {
 
     Component = "adot-collector"
 
+  }
+
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "X86_64"
   }
 
 }
