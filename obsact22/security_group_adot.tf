@@ -79,10 +79,41 @@ resource "aws_vpc_security_group_ingress_rule" "service_b_to_adot_http" {
 # Collector -> AWS APIs
 # ------------------------------------------------------------
 
-resource "aws_vpc_security_group_egress_rule" "adot_outbound" {
+resource "aws_vpc_security_group_egress_rule" "adot_https" {
 
   security_group_id = aws_security_group.adot.id
 
+  description = "HTTPS to AWS telemetry and runtime services"
   cidr_ipv4   = "0.0.0.0/0"
-  ip_protocol = "-1"
+  from_port   = 443
+  to_port     = 443
+  ip_protocol = "tcp"
+}
+
+
+# ------------------------------------------------------------
+# Collector -> VPC DNS resolver
+# ------------------------------------------------------------
+
+resource "aws_vpc_security_group_egress_rule" "adot_dns_tcp" {
+
+  security_group_id = aws_security_group.adot.id
+
+  description = "DNS over TCP through the VPC resolver"
+  cidr_ipv4   = var.vpc_cidr
+  from_port   = 53
+  to_port     = 53
+  ip_protocol = "tcp"
+}
+
+
+resource "aws_vpc_security_group_egress_rule" "adot_dns_udp" {
+
+  security_group_id = aws_security_group.adot.id
+
+  description = "DNS over UDP through the VPC resolver"
+  cidr_ipv4   = var.vpc_cidr
+  from_port   = 53
+  to_port     = 53
+  ip_protocol = "udp"
 }

@@ -121,13 +121,13 @@ resource "aws_ecs_service" "adot" {
 
   network_configuration {
 
-    subnets = aws_subnet.private_app[*].id
+    subnets = aws_subnet.public[*].id
 
     security_groups = [
       aws_security_group.adot.id
     ]
 
-    assign_public_ip = false
+    assign_public_ip = true
 
   }
 

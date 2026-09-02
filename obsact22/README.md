@@ -1,94 +1,116 @@
-# Laboratorio 2.2 Observabilidad - Terraform
+# Laboratorio integrador de observabilidad en AWS
 
-Este paquete implementa la arquitectura definida:
+Este directorio contiene la infraestructura como código para la base AWS del laboratorio. La configuración está preparada para crear los recursos de forma reproducible, pero su presencia en Terraform **no demuestra que estén desplegados**.
 
-- 1 VPC
-- 2 Zonas de Disponibilidad (Availability Zones)
-- 2 subredes públicas
-- 2 subredes privadas para las aplicaciones
-- 2 subredes privadas para la base de datos
-- Internet Gateway
-- 1 NAT Gateway (diseño del laboratorio optimizado en costos)
-- ALB expuesto a Internet
-- Listener HTTP :80
-- 2 Target Groups con tipo de target `ip`
-  - Target Group para service-a
-  - Target Group para service-b
-- Enrutamiento basado en rutas:
-  - `/service-a` y `/service-a/*` -> Service A
-  - `/service-b` y `/service-b/*` -> Service B
-- Un repositorio ECR para cada microservicio
-- 1 clúster ECS
-- 2 servicios ECS ejecutándose sobre Fargate
-- 2 definiciones de tareas (ECS Task Definitions)
-- Service A -> Service B mediante HTTP privado utilizando AWS Cloud Map
-- Ambos servicios -> PostgreSQL RDS
-- Contraseña maestra de RDS administrada mediante AWS Secrets Manager
-- CloudWatch Logs
-- Roles IAM para ejecución de tareas y para las propias tareas
-- Security Groups
+## Arquitectura objetivo de esta unidad
 
-## ¿Por qué desired_count comienza en 0?
+- Una VPC con dos subredes públicas para ECS/Fargate y el ALB.
+- Dos subredes privadas, sin ruta a Internet, para PostgreSQL RDS.
+- Sin NAT Gateway ni VPC endpoints durante el laboratorio, para contener costos.
+- Un ALB público que dirige tráfico exclusivamente a Service A.
+- Service A, Service B y `data-service` en ECS/Fargate.
+- ECS Service Connect en el namespace privado `${environment}.internal`:
+  - Service A actúa como cliente.
+  - Service B se descubre como `service-b:8001`.
+  - `data-service` se descubre como `data-service:8002`.
+- Service B y `data-service` no tienen listener, target group, URL pública ni ingreso desde Internet.
+- Solo Service B y `data-service` acceden a RDS y reciben la contraseña administrada por Secrets Manager.
+- Service A no recibe credenciales ni conectividad de red hacia RDS.
+- CloudWatch Logs con retención de siete días para contenedores y proxies de Service Connect.
 
-Terraform puede crear los repositorios ECR y las definiciones de tareas incluso antes de que existan las imágenes Docker.
+Las tareas usan subredes públicas y `assign_public_ip = true` únicamente para alcanzar ECR, CloudWatch y otros servicios de salida. Los grupos de seguridad continúan bloqueando el ingreso público directo. Esta es una optimización temporal para el sandbox académico, no una topología recomendada para producción.
 
-Si ECS inicia las tareas antes de que las imágenes hayan sido cargadas en ECR, las tareas fallarán al intentar descargar las imágenes.
+## Estado de OpenTelemetry
 
-Primera ejecución:
+En esta unidad, `OTEL_ENABLED=false` para los tres microservicios y `adot_desired_count=0`. Esto evita iniciar aplicaciones dependientes de ADOT antes de publicar las imágenes y completar la unidad de observabilidad. La configuración de Service Connect aporta descubrimiento y telemetría de red L7, pero no reemplaza la instrumentación OTel de aplicación.
 
-```bash
-terraform init
-terraform fmt -recursive
-terraform validate
-terraform plan
-terraform apply
-```
+ECS Service Connect sustituye a AWS App Mesh en este laboratorio porque App Mesh tiene anunciado su fin de soporte para el 30 de septiembre de 2026. La evidencia académica de esa sustitución deberá mostrar en AWS el namespace compartido, los servicios registrados, la comunicación por alias y los logs o métricas L7; el código por sí solo no demuestra la operación del mesh.
 
-Luego, se deben cargar las imágenes Docker en los repositorios ECR que Terraform mostrará en sus outputs.
+## Etiquetas de imagen obligatorias
 
-Después, cambiar:
+Las cuatro imágenes usan repositorios ECR inmutables. Cada variable de etiqueta acepta únicamente:
+
+- Un SHA Git corto en minúsculas, de 7 a 12 caracteres; o
+- `v1.0.0` para la entrega final.
+
+No se permiten etiquetas vacías ni `latest`:
 
 ```hcl
-service_a_desired_count = 2
-service_b_desired_count = 2
+service_a_image_tag    = "abcdef1"
+service_b_image_tag    = "abcdef1"
+data_service_image_tag = "abcdef1"
+adot_image_tag         = "abcdef1"
 ```
 
-y ejecutar nuevamente:
+Todas las imágenes publicadas para estas tareas Fargate deben ser Linux x86_64. Desde la raíz del repositorio, se debe fijar la plataforma en cada construcción, sin depender de la arquitectura del host:
 
 ```bash
-terraform plan
-terraform apply
+IMAGE_TAG=abcdef1
+
+docker build --platform linux/amd64 -t "${SERVICE_A_REPOSITORY_URL}:${IMAGE_TAG}" opentelemetry_act2_2/servicio-a
+docker push "${SERVICE_A_REPOSITORY_URL}:${IMAGE_TAG}"
+
+docker build --platform linux/amd64 -t "${SERVICE_B_REPOSITORY_URL}:${IMAGE_TAG}" opentelemetry_act2_2/servicio-b
+docker push "${SERVICE_B_REPOSITORY_URL}:${IMAGE_TAG}"
+
+docker build --platform linux/amd64 -t "${DATA_SERVICE_REPOSITORY_URL}:${IMAGE_TAG}" opentelemetry_act2_2/data-service
+docker push "${DATA_SERVICE_REPOSITORY_URL}:${IMAGE_TAG}"
+
+docker build --platform linux/amd64 -t "${ADOT_REPOSITORY_URL}:${IMAGE_TAG}" opentelemetry_act2_2/observabilidad/aws
+docker push "${ADOT_REPOSITORY_URL}:${IMAGE_TAG}"
 ```
 
-## Requisitos importantes de las aplicaciones
+Las variables `*_REPOSITORY_URL` representan las URLs ECR expuestas por los outputs de Terraform. La etiqueta debe coincidir con la declarada en el archivo `.tfvars` revisado.
 
-Los contenedores deben exponer:
+## Bootstrap seguro
 
-- Service A: puerto 8000
-- Service B: puerto 8001
-- `/health` debe retornar un código HTTP entre 200 y 399
+Todos los conteos deseados comienzan en cero porque los repositorios ECR estarán vacíos durante la primera creación:
 
-Ambas aplicaciones reciben las siguientes variables de entorno:
+```hcl
+service_a_desired_count    = 0
+service_b_desired_count    = 0
+data_service_desired_count = 0
+adot_desired_count         = 0
+```
 
-- DB_HOST
-- DB_PORT
-- DB_NAME
-- DB_USER
-- DB_PASSWORD
+Secuencia prevista, siempre con revisión humana antes de aplicar:
 
-Service A recibe adicionalmente:
+1. Copiar `terraform.tfvars.example` a un archivo local `.tfvars` no versionado.
+2. Ejecutar `terraform fmt -check -recursive` y `terraform validate`.
+3. Revisar un `terraform plan` con los cuatro conteos en cero.
+4. Aplicar solo después de aprobación explícita para crear VPC, ALB, RDS, ECR, ECS y los recursos auxiliares.
+5. Construir con `--platform linux/amd64` y publicar las cuatro imágenes con la misma etiqueta inmutable declarada en variables.
+6. Ejecutar la tarea one-shot de migración y validar el esquema de RDS antes de iniciar B o `data-service`.
+7. Cambiar temporalmente a `1` los conteos de A, B y `data-service`, revisar otro plan y aplicar.
+8. Habilitar ADOT y `OTEL_ENABLED` únicamente en la unidad posterior de observabilidad.
+9. Recolectar evidencias sanitizadas y destruir los recursos al finalizar la demostración.
 
-- SERVICE_B_URL
+No se debe incrementar un conteo si su imagen no existe en ECR. Service A tampoco debe iniciarse hasta que B, `data-service` y el esquema requerido estén disponibles.
 
-`SERVICE_B_URL` utiliza el DNS privado de AWS Cloud Map, por lo que Service A no necesita comunicarse con Service B a través del ALB público.
+## Variables principales
 
-## Validaciones realizadas antes de empaquetar
+| Variable | Uso | Valor inicial |
+|---|---|---:|
+| `service_a_port` | Puerto público detrás del ALB | `8000` |
+| `service_b_port` | Puerto privado de Service Connect | `8001` |
+| `data_service_port` | Puerto privado de Service Connect | `8002` |
+| `data_service_health_path` | Health check dentro del contenedor | `/health` |
+| `data_service_cpu` | CPU Fargate de `data-service` | `256` |
+| `data_service_memory` | Memoria Fargate de `data-service` | `512` MiB |
+| `db_multi_az` | Alta disponibilidad de RDS | `false` |
 
-Este paquete fue revisado para verificar:
+## Validaciones y evidencia posterior
 
-- Direcciones de recursos Terraform duplicadas.
-- Bloques HCL de una sola línea con múltiples argumentos, como los que generaron los errores anteriores.
-- Balance correcto de llaves.
-- Recursos de CloudWatch Log Groups duplicados.
+Antes de considerar funcional esta arquitectura se debe comprobar en AWS:
 
-El entorno de ejecución utilizado para generar este paquete no tiene instalado el binario de Terraform, por lo que no fue posible ejecutar directamente `terraform validate`.
+- El ALB solo contiene el target group de Service A.
+- Service B y `data-service` no tienen rutas públicas.
+- Los tres servicios muestran Service Connect habilitado en el mismo namespace.
+- A resuelve `service-b:8001` y `data-service:8002`.
+- RDS permanece privada y solo acepta conexiones desde los SG de B y data.
+- A no contiene variables `DB_*` ni secretos de RDS.
+- B y data obtienen la contraseña mediante el rol de ejecución autorizado, no mediante sus task roles.
+- La creación de un pedido recorre A -> B -> data -> RDS.
+- Los logs del proxy de Service Connect aparecen en el log group de retención limitada.
+
+Hasta ejecutar estas comprobaciones, la unidad debe describirse como **implementada y validada localmente en Terraform**, no como desplegada o probada en AWS.

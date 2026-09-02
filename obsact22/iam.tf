@@ -21,6 +21,16 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_managed" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+resource "aws_iam_role" "service_a_execution" {
+  name               = "${local.name}-service-a-execution-role"
+  assume_role_policy = data.aws_iam_policy_document.ecs_tasks_assume.json
+}
+
+resource "aws_iam_role_policy_attachment" "service_a_execution_managed" {
+  role       = aws_iam_role.service_a_execution.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
 data "aws_iam_policy_document" "ecs_execution_secrets" {
   statement {
     effect = "Allow"
@@ -103,4 +113,3 @@ resource "aws_iam_role_policy" "service_b_ecs_exec" {
     }]
   })
 }
-

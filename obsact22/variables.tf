@@ -28,16 +28,43 @@ variable "public_subnet_cidrs" {
   default     = ["10.20.1.0/24", "10.20.2.0/24"]
 }
 
-variable "private_app_subnet_cidrs" {
-  description = "Two private application subnet CIDRs, one per AZ."
-  type        = list(string)
-  default     = ["10.20.11.0/24", "10.20.12.0/24"]
-}
-
 variable "private_db_subnet_cidrs" {
   description = "Two private database subnet CIDRs, one per AZ."
   type        = list(string)
   default     = ["10.20.21.0/24", "10.20.22.0/24"]
+}
+
+variable "data_service_cpu" {
+  description = "Fargate CPU units assigned to data-service."
+  type        = number
+  default     = 256
+
+  validation {
+    condition     = contains([256, 512, 1024, 2048, 4096, 8192, 16384], var.data_service_cpu)
+    error_message = "data-service CPU must be a supported Fargate CPU value."
+  }
+}
+
+variable "data_service_desired_count" {
+  description = "Desired number of data-service tasks. Keep 0 until the image is pushed and RDS is initialized."
+  type        = number
+  default     = 0
+
+  validation {
+    condition     = var.data_service_desired_count >= 0 && floor(var.data_service_desired_count) == var.data_service_desired_count
+    error_message = "data-service desired count must be a non-negative integer."
+  }
+}
+
+variable "data_service_health_path" {
+  description = "Container health check path for data-service."
+  type        = string
+  default     = "/health"
+
+  validation {
+    condition     = startswith(var.data_service_health_path, "/")
+    error_message = "data-service health path must start with '/'."
+  }
 }
 
 variable "data_service_image_tag" {
@@ -47,6 +74,28 @@ variable "data_service_image_tag" {
   validation {
     condition     = can(regex("^([0-9a-f]{7,12}|v1\\.0\\.0)$", var.data_service_image_tag))
     error_message = "data-service image tag must be a 7-12 character lowercase Git SHA or v1.0.0; empty and latest are not allowed."
+  }
+}
+
+variable "data_service_memory" {
+  description = "Fargate memory in MiB assigned to data-service."
+  type        = number
+  default     = 512
+
+  validation {
+    condition     = var.data_service_memory >= 512 && floor(var.data_service_memory) == var.data_service_memory
+    error_message = "data-service memory must be an integer of at least 512 MiB."
+  }
+}
+
+variable "data_service_port" {
+  description = "Private HTTP port exposed by data-service."
+  type        = number
+  default     = 8002
+
+  validation {
+    condition     = var.data_service_port >= 1 && var.data_service_port <= 65535 && floor(var.data_service_port) == var.data_service_port
+    error_message = "data-service port must be an integer between 1 and 65535."
   }
 }
 
@@ -64,12 +113,6 @@ variable "service_b_port" {
 
 variable "service_a_health_path" {
   description = "ALB health check path for service A."
-  type        = string
-  default     = "/health"
-}
-
-variable "service_b_health_path" {
-  description = "ALB health check path for service B."
   type        = string
   default     = "/health"
 }
