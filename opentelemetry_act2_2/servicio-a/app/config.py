@@ -9,6 +9,7 @@ class Settings:
     DB_PASSWORD = os.getenv("DB_PASSWORD")
 
     SERVICE_B_URL = os.getenv("SERVICE_B_URL")
+    DATA_SERVICE_URL = os.getenv("DATA_SERVICE_URL")
 
 
 settings = Settings()

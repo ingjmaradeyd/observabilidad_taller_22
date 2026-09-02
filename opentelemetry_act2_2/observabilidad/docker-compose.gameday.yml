@@ -60,12 +60,8 @@ services:
     cap_add:
       - NET_ADMIN
     environment:
-      DB_HOST: postgres
-      DB_PORT: "5432"
-      DB_NAME: opentelemetry_bd
-      DB_USER: postgres
-      DB_PASSWORD: "123456789"
       SERVICE_B_URL: http://service-b-chaos:8001
+      DATA_SERVICE_URL: http://data-service:8002
       OTEL_ENABLED: "true"
       OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector:4317
     volumes:
@@ -73,9 +69,9 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      postgres:
-        condition: service_healthy
       service-b:
+        condition: service_healthy
+      data-service:
         condition: service_healthy
       otel-collector:
         condition: service_started
