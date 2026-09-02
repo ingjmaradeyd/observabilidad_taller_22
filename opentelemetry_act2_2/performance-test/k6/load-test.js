@@ -28,6 +28,7 @@ export default function () {
   const params = {
     headers: {
       'Content-Type': 'application/json',
+      'Idempotency-Key': `performance-${__VU}-${__ITER}`,
     },
   };
 

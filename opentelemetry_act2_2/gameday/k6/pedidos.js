@@ -33,6 +33,7 @@ export default function () {
   const response = http.post(endpoint, payload, {
     headers: {
       'Content-Type': 'application/json',
+      'Idempotency-Key': `${testMode}-${__VU}-${__ITER}`,
     },
     tags: metricTags,
   });

@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS pedidos (
     id_cliente INTEGER NOT NULL,
     producto TEXT NOT NULL,
     cantidad INTEGER NOT NULL,
-    valor NUMERIC NOT NULL
+    valor NUMERIC NOT NULL,
+    idempotency_key TEXT NOT NULL,
+    request_fingerprint CHAR(64) NOT NULL
 );
 
 ALTER SEQUENCE pedidos_id_pedidos_seq

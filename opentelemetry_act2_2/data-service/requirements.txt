@@ -1,0 +1,10 @@
+pydantic
+fastapi
+sqlalchemy
+uvicorn[standard]
+psycopg[binary]
+
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-exporter-otlp-proto-grpc
