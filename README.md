@@ -157,7 +157,7 @@ Los resultados JSON de k6 ubicados en [`evidencias/laboratorio-integrador/local/
 ## Documento final y video
 
 - **Informe final:** [Informe_Final_Laboratorio_Integrador_AWS.pdf](evidencias/laboratorio-integrador/INFORME_FINAL_LABORATORIO_INTEGRADOR_AWS.pdf)
-- **Video de demostración:** `VIDEO_URL_PENDIENTE`
+- **Video de demostración:** [Prueba Observabilidad (SharePoint)](https://unisabanaedu-my.sharepoint.com/:v:/r/personal/wilmercade_unisabana_edu_co/Documents/Observabilidad/Prueba%20Observabilidad.mov?d=w291fac361aac4a28b9bea8b98d7c6af9&csf=1&web=1&e=ZWP0Jo&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
 
 El video debe mostrar, en este orden, el estado saludable de ECS, una solicitud funcional, la traza distribuida, la inyección de latencia, la inyección de errores, la detección en CloudWatch y el rollback. Las capturas y salidas usadas en la demostración están referenciadas en el índice anterior.
 
