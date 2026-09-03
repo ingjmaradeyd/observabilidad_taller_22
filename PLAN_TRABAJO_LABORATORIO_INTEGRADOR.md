@@ -6,10 +6,10 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 
 ## Estado general
 
-- Fase actual: Security Hub está habilitado en la cuenta AWS nueva y sus estándares están en `READY`; la topología Terraform completa ya fue aplicada (94 recursos creados), las cuatro imágenes están verificadas en ECR, la tarea migratoria RDS terminó con `exitCode=0`, A/B/data-service y ADOT están activos, y el flujo funcional/OTel ya tiene evidencia AWS. La instrumentación de métricas y el pipeline OTLP están configurados; VPC Flow Logs ya entrega registros `ACCEPT/REJECT` y tiene una alarma operativa. Ambos experimentos de caos fueron realizados; el de `data-service` produjo 3/30 errores controlados y la alarma estática AIOps detectó `DataServiceChaosErrors=3` con MTTD de 53,213 s. La alarma de anomalías permanece `OK` por historial insuficiente. El rollback fue aplicado y el equipo confirmó posteriormente que Service B y `data-service` quedaron `COMPLETED` y estables; el archivo 07 conserva solo una captura intermedia `IN_PROGRESS`. Faltan MTTD de anomalía dinámica, p99 durante caos, correlación p99/`trace_id`, comparación de ruido/accionabilidad, dashboard de seguridad, madurez y cierre de entrega.
+- Fase actual: Security Hub está habilitado en la cuenta AWS nueva y sus estándares están en `READY`; la topología Terraform completa ya fue aplicada (94 recursos creados), las cuatro imágenes están verificadas en ECR, la tarea migratoria RDS terminó con `exitCode=0`, A/B/data-service y ADOT están activos, y el flujo funcional/OTel ya tiene evidencia AWS. La instrumentación de métricas y el pipeline OTLP están configurados; VPC Flow Logs ya entrega registros `ACCEPT/REJECT` y tiene una alarma operativa. Ambos experimentos de caos fueron realizados; el de `data-service` produjo 3/30 errores controlados y la alarma estática AIOps detectó `DataServiceChaosErrors=3` con MTTD de 53,213 s. La alarma de anomalías permanece `OK` por historial insuficiente. El rollback fue aplicado y el equipo confirmó posteriormente que Service B y `data-service` quedaron `COMPLETED` y estables; el archivo 07 conserva solo una captura intermedia `IN_PROGRESS`. La auditoría de rúbrica y la revisión de secretos/evidencias están completadas. Persisten las brechas técnicas declaradas; faltan la demostración en vivo, el tag `v1.0` y la entrega.
 - Alcance aprobado: **únicamente AWS**.
 - Impacto aceptado: no se cumplirá literalmente el nivel Excelente de los criterios que exigen AWS y GCP.
-- Próximo hito: realizar la revisión final del informe, preparar el commit/tag y efectuar la entrega sin afirmar brechas no demostradas.
+- Próximo hito: realizar la demostración en vivo, preparar el commit y crear el tag `v1.0` tras la aprobación final, para efectuar la entrega sin afirmar brechas no demostradas.
 - Rama base: `developer`.
 - Commit remoto verificado: `3ce9dcbd0f963844a2216ee4b4deb7aef36228d0`.
 - Repositorio: público y sincronizado con GitHub.
@@ -332,11 +332,11 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 ## 11. Fase 8 - Evidencias, demostración y entrega
 
 - [x] Preparar el informe final con índice de evidencias, arquitectura, resultados, brechas, madurez, roadmap y guion de demostración (`evidencias/laboratorio-integrador/INFORME_FINAL_LABORATORIO_INTEGRADOR_AWS.md`).
-- [ ] Evitar subir credenciales, secretos, estados Terraform sensibles o archivos raw masivos.
+- [x] Revisar secretos y evidencias antes del tag: no se detectaron credenciales, secretos, estados Terraform sensibles ni archivos raw masivos en el paquete de entrega verificado.
 - [x] Documentar arquitectura final y flujo de correlación entre métricas, logs y trazas en el informe final.
 - [x] Preparar guion de demostración técnica en vivo en el informe final; la demostración final continúa pendiente.
 - [ ] Mostrar en la demostración: tres servicios en AWS, mesh, anomalía, alerta, dashboard de seguridad y chaos.
-- [ ] Auditar el resultado contra la rúbrica y declarar explícitamente los criterios multicloud no cubiertos.
+- [x] Auditar el resultado contra la rúbrica y declarar explícitamente los criterios multicloud no cubiertos en el informe final y en la matriz de brechas.
 - [ ] Confirmar que el repositorio continúe público.
 - [ ] Crear el tag `v1.0` únicamente después de aprobar la auditoría final.
 - [ ] Publicar el tag y verificarlo remotamente.

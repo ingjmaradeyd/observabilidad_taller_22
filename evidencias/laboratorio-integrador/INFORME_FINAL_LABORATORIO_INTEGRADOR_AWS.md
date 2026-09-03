@@ -134,7 +134,7 @@ La siguiente tabla es un **mapeo operativo de ocho dominios** para organizar la 
 5. Explicar por qué la banda `2σ` permanece `OK`: falta historial de aprendizaje.
 6. Revisar los dos experimentos, blast radius, rollback y la limitación del archivo 07.
 7. Mostrar Flow Logs y los estándares `READY` de Security Hub, diferenciando señales disponibles de dashboard pendiente.
-8. Cerrar con SLO/error budget, brechas abiertas, roadmap y el siguiente paso de revisión/tag/entrega.
+8. Cerrar con SLO/error budget, brechas abiertas y roadmap; indicar que la auditoría documental ya fue completada y que siguen pendientes la demostración en vivo, el tag `v1.0` y la entrega.
 
 ## 11. Índice de evidencias
 
@@ -166,6 +166,10 @@ La siguiente tabla es un **mapeo operativo de ocho dominios** para organizar la 
 ## Conclusión
 
 La plataforma alcanza un estado parcialmente demostrado: hay arquitectura AWS funcional, telemetría distribuida, seguridad y red con señales iniciales, dos experimentos de caos, alarma estática con MTTD inferior a dos minutos y una cuantificación honesta del impacto sobre disponibilidad/error budget. Las brechas se mantienen visibles para que la revisión final valore evidencia comprobable, no resultados esperados.
+
+## Estado documental previo al tag
+
+La auditoría contra la rúbrica y la revisión de secretos/evidencias del paquete de entrega ya fueron completadas. La revisión confirmó que el informe mantiene el alcance AWS-only, declara las brechas multicloud y no presenta como completadas las capacidades aún no demostradas. La demostración técnica en vivo, la aprobación final, la creación del tag `v1.0` y la entrega continúan pendientes.
 
 ## Key Learnings:
 
