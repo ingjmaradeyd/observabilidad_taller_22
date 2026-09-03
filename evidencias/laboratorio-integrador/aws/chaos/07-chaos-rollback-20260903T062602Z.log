@@ -1,0 +1,12 @@
+TIMESTAMP_UTC=20260903T062602Z
+=== ECS ROLLBACK STATUS ===
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|                                                                                    DescribeServices                                                                                     |
++---------+------------------------------------+----------+--------------+----------+---------+-------------------------------------------------------------------------------------------+
+| desired |               name                 | pending  |   rollout    | running  | status  |                                      taskDefinition                                       |
++---------+------------------------------------+----------+--------------+----------+---------+-------------------------------------------------------------------------------------------+
+|  1      |  lab-adot-collector                |  0       |  COMPLETED   |  1       |  ACTIVE |  arn:aws:ecs:us-east-1:526727148102:task-definition/lab-adot-collector:1                  |
+|  1      |  otel-fargate-lab-lab-service-a    |  0       |  COMPLETED   |  1       |  ACTIVE |  arn:aws:ecs:us-east-1:526727148102:task-definition/otel-fargate-lab-lab-service-a:2      |
+|  1      |  otel-fargate-lab-lab-service-b    |  0       |  IN_PROGRESS |  1       |  ACTIVE |  arn:aws:ecs:us-east-1:526727148102:task-definition/otel-fargate-lab-lab-service-b:4      |
+|  1      |  otel-fargate-lab-lab-data-service |  0       |  IN_PROGRESS |  1       |  ACTIVE |  arn:aws:ecs:us-east-1:526727148102:task-definition/otel-fargate-lab-lab-data-service:6   |
++---------+------------------------------------+----------+--------------+----------+---------+-------------------------------------------------------------------------------------------+

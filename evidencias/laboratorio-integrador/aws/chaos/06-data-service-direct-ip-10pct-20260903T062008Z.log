@@ -1,0 +1,15 @@
+EXPERIMENT_START_UTC=20260903T062008Z
+EXPERIMENT=data-service-error-rate
+TASK_DEFINITION_REVISION=5
+IMAGE_TAG=1ffbe23
+REQUEST_PATH=Service A ECS Exec -> http://10.20.2.91:8002/pedidos
+CONFIGURED_ERROR_RATE_PERCENT=10.00
+TOTAL_REQUESTS=30
+SUCCESSFUL_REQUESTS=27
+ERROR_REQUESTS=3
+OBSERVED_ERROR_RATE_PERCENT=10.00
+FAILED_REQUESTS=10,20,30
+FAILED_RESPONSE={"code":"CHAOS_INJECTED","message":"Controlled failure injected"}
+SUCCESS_RESPONSE_STATUS=201
+RESULT=SUCCESSFUL_CONTROLLED_CHAOS_EXPERIMENT
+NOTE=Direct private-IP test was used to isolate the data-service process from the Service Connect DNS alias. The three controlled failures were HTTP 503 with code CHAOS_INJECTED; no order was persisted for those failed attempts.

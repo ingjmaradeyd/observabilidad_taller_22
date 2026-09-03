@@ -1,0 +1,7 @@
+TIMESTAMP_UTC=20260903T033614Z
+=== HEALTH ===
+{"message":"Servicio Clientes - A","status":"EJECUTANDO"}
+HTTP_STATUS=200
+=== REQUEST WITH OTEL ===
+{"id_pedidos":2,"id_cliente":1,"producto":"Prueba OTel AWS","cantidad":1,"valor":50000.0}
+HTTP_STATUS=200

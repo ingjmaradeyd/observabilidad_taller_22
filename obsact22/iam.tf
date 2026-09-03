@@ -56,6 +56,25 @@ resource "aws_iam_role" "service_a_task" {
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_assume.json
 }
 
+resource "aws_iam_role_policy" "service_a_ecs_exec" {
+  name = "ecs-exec"
+  role = aws_iam_role.service_a_task.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
 resource "aws_iam_role" "service_b_task" {
   name               = "${local.name}-service-b-task-role"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_assume.json

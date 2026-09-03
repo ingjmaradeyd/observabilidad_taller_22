@@ -1,0 +1,8 @@
+TIMESTAMP_UTC=20260903T031815Z
+ALB_DNS=otel-fargate-lab-lab-alb-1054318105.us-east-1.elb.amazonaws.com
+=== SERVICE A HEALTH ===
+{"message":"Servicio Clientes - A","status":"EJECUTANDO"}
+HTTP_STATUS=200
+=== A -> B -> DATA-SERVICE -> RDS ===
+{"id_pedidos":1,"id_cliente":1,"producto":"Prueba AWS observabilidad","cantidad":2,"valor":75000.0}
+HTTP_STATUS=200

@@ -1,0 +1,134 @@
+[
+    {
+        "name": "otel-fargate-lab-lab-service-a",
+        "scEnabled": null,
+        "namespace": null,
+        "scServices": null,
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "running": 1,
+                "desired": 1,
+                "rollout": "COMPLETED",
+                "reason": "ECS deployment ecs-svc/1395586389729857921 completed."
+            }
+        ]
+    },
+    {
+        "name": "otel-fargate-lab-lab-service-b",
+        "scEnabled": null,
+        "namespace": null,
+        "scServices": null,
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "running": 1,
+                "desired": 1,
+                "rollout": "COMPLETED",
+                "reason": "ECS deployment ecs-svc/0881606418761981440 completed."
+            }
+        ]
+    },
+    {
+        "name": "otel-fargate-lab-lab-data-service",
+        "scEnabled": null,
+        "namespace": null,
+        "scServices": null,
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "running": 1,
+                "desired": 1,
+                "rollout": "COMPLETED",
+                "reason": "ECS deployment ecs-svc/9682795630318379247 completed."
+            }
+        ]
+    }
+]
+--------------------------------------------------------------------------------------------------------------------------------
+|                                                         ListServices                                                         |
++----------------------+-----------------------------------------------------------------------------------------+-------------+
+|          id          |                                          name                                           |  namespace  |
++----------------------+-----------------------------------------------------------------------------------------+-------------+
+|  srv-g7kjh34d3v3dxdsp|  aws-ecs-sc.client.531f6f91-09c3-3591-ae28-734539fefac3.otel-fargate-lab-lab-service-a  |  None       |
+|  srv-5k7fia7yblqnt3sj|  service-b                                                                              |  None       |
+|  srv-6npdjs5sifs37j5n|  data-service                                                                           |  None       |
++----------------------+-----------------------------------------------------------------------------------------+-------------+
+cd /Users/ricardocastro/Documents/Maestria/Obervabilidad/observabilidad_taller_22/obsact22
+
+CLUSTER_NAME="$(terraform output -raw ecs_cluster_name)"
+SERVICE_B_NAME="$(terraform output -raw service_b_ecs_service_name)"
+DATA_SERVICE_NAME="$(terraform output -raw data_service_ecs_service_name)"
+SERVICE_A_NAME="${SERVICE_B_NAME%-service-b}-service-a"
+
+aws ecs describe-services \
+  --region us-east-1 \
+  --cluster "$CLUSTER_NAME" \
+  --services "$SERVICE_A_NAME" "$SERVICE_B_NAME" "$DATA_SERVICE_NAME" \
+  --query 'services[].{name:serviceName,serviceConnect:serviceConnectConfiguration,events:events[0:8]}' \
+  --output json
+[
+    {
+        "name": "otel-fargate-lab-lab-service-a",
+        "serviceConnect": null,
+        "events": [
+            {
+                "id": "fbe1aefd-9754-4bca-b805-0b712e77d19d",
+                "createdAt": "2026-09-02T21:02:47.537000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-a) has reached a steady state."
+            },
+            {
+                "id": "6bd826bf-100a-40d9-bd40-1e1e76606c87",
+                "createdAt": "2026-09-02T21:02:38.311000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-a) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-east-1:<ACCOUNT_ID>:targetgroup/otel-fargate-lab-lab-a-tg/b308695ba69fa8a7)"
+            },
+            {
+                "id": "41617181-4822-4636-ba0f-0da642f86ac7",
+                "createdAt": "2026-09-02T21:01:49.853000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-a) has started 1 tasks: (task 9754918d3cf14326af597cdef14f8e03)."
+            },
+            {
+                "id": "234cd16c-9a79-44a8-8a8f-409ca9a7566a",
+                "createdAt": "2026-09-02T20:18:12.901000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-a) has reached a steady state."
+            },
+            {
+                "id": "fbd2bf3c-c0be-4bff-ad26-141b1ef31da9",
+                "createdAt": "2026-09-02T20:18:12.900000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-a) (deployment ecs-svc/1395586389729857921) deployment completed."
+            }
+        ]
+    },
+    {
+        "name": "otel-fargate-lab-lab-service-b",
+        "serviceConnect": null,
+        "events": [
+            {
+                "id": "71813d8b-a778-4c19-9b95-3f29b52fbf95",
+                "createdAt": "2026-09-02T21:03:26.311000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-b) has reached a steady state."
+            },
+            {
+                "id": "d04b7a12-61f0-44d6-b754-34d225573e17",
+                "createdAt": "2026-09-02T21:01:49.379000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-b) has started 1 tasks: (task 203e04e9562340c9a2de2309f6f1171d)."
+            },
+            {
+                "id": "029e2681-c3f3-4b98-94ed-2631cea85eff",
+                "createdAt": "2026-09-02T20:21:29.607000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-b) has reached a steady state."
+            },
+            {
+                "id": "53606d1e-5231-4e33-8274-f99dc873c03b",
+                "createdAt": "2026-09-02T20:21:29.606000-05:00",
+                "message": "(service otel-fargate-lab-lab-service-b) (deployment ecs-svc/0881606418761981440) deployment completed."
+            }
+        ]
+    },
+    {
+        "name": "otel-fargate-lab-lab-data-service",
+        "serviceConnect": null,
+        "events": [
+            {
+                "id": "4e3db9e1-2a27-4585-9b37-a34e37ab3572",
+:

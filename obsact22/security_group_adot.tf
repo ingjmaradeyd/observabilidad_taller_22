@@ -76,6 +76,23 @@ resource "aws_vpc_security_group_ingress_rule" "service_b_to_adot_http" {
 
 
 # ------------------------------------------------------------
+# data-service -> OTLP gRPC
+# ------------------------------------------------------------
+
+resource "aws_vpc_security_group_ingress_rule" "data_service_to_adot_grpc" {
+
+  security_group_id = aws_security_group.adot.id
+
+  description                  = "OTLP gRPC telemetry from data-service."
+  referenced_security_group_id = aws_security_group.data_service.id
+
+  from_port   = 4317
+  to_port     = 4317
+  ip_protocol = "tcp"
+}
+
+
+# ------------------------------------------------------------
 # Collector -> AWS APIs
 # ------------------------------------------------------------
 

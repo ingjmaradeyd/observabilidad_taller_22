@@ -1,0 +1,10 @@
+Evidencia sanitizada — aplicación de conectividad OTLP en AWS
+
+Resultado Terraform: Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+
+Cambios aplicados:
+- Reglas de salida TCP 4317 desde service-a, service-b y data-service hacia ADOT.
+- Regla de entrada TCP 4317 en ADOT desde data-service.
+- Las reglas usan referencias entre security groups; no se habilitaron rangos CIDR amplios.
+
+Siguiente verificación: ejecutar una solicitud funcional y consultar logs/métricas/trazas de ADOT y de la aplicación.

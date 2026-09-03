@@ -1,0 +1,64 @@
+TIMESTAMP_UTC=20260903T051845Z
+PROFILE=observabilidad-lab-nueva
+CLUSTER=otel-fargate-lab-lab-cluster
+PREVIOUS_TASK_DEFINITION_REVISION=2
+CHAOS_TASK_DEFINITION_REVISION=3
+-----------------------------------------------------------------------
+|                            UpdateService                            |
++---------+-------------------------------------+----------+----------+
+| desired |                name                 | running  | status   |
++---------+-------------------------------------+----------+----------+
+|  1      |  otel-fargate-lab-lab-data-service  |  1       |  ACTIVE  |
++---------+-------------------------------------+----------+----------+
+CHAOS_SERVICE_STABLE=true
+ALB_DNS=otel-fargate-lab-lab-alb-1054318105.us-east-1.elb.amazonaws.com
+REQUEST_URL=http://otel-fargate-lab-lab-alb-1054318105.us-east-1.elb.amazonaws.com/service-a/pedidos/crear
+=== REQUESTS ===
+request=1 http=200 body={"id_pedidos":35,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-1","cantidad":1,"valor":1000.0}
+request=2 http=200 body={"id_pedidos":36,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-2","cantidad":1,"valor":1000.0}
+request=3 http=200 body={"id_pedidos":37,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-3","cantidad":1,"valor":1000.0}
+request=4 http=200 body={"id_pedidos":38,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-4","cantidad":1,"valor":1000.0}
+request=5 http=200 body={"id_pedidos":39,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-5","cantidad":1,"valor":1000.0}
+request=6 http=200 body={"id_pedidos":40,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-6","cantidad":1,"valor":1000.0}
+request=7 http=200 body={"id_pedidos":41,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-7","cantidad":1,"valor":1000.0}
+request=8 http=200 body={"id_pedidos":42,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-8","cantidad":1,"valor":1000.0}
+request=9 http=200 body={"id_pedidos":43,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-9","cantidad":1,"valor":1000.0}
+request=10 http=200 body={"id_pedidos":44,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-10","cantidad":1,"valor":1000.0}
+request=11 http=200 body={"id_pedidos":45,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-11","cantidad":1,"valor":1000.0}
+request=12 http=200 body={"id_pedidos":46,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-12","cantidad":1,"valor":1000.0}
+request=13 http=200 body={"id_pedidos":47,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-13","cantidad":1,"valor":1000.0}
+request=14 http=200 body={"id_pedidos":48,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-14","cantidad":1,"valor":1000.0}
+request=15 http=200 body={"id_pedidos":49,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-15","cantidad":1,"valor":1000.0}
+request=16 http=200 body={"id_pedidos":50,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-16","cantidad":1,"valor":1000.0}
+request=17 http=200 body={"id_pedidos":51,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-17","cantidad":1,"valor":1000.0}
+request=18 http=200 body={"id_pedidos":52,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-18","cantidad":1,"valor":1000.0}
+request=19 http=200 body={"id_pedidos":53,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-19","cantidad":1,"valor":1000.0}
+request=20 http=200 body={"id_pedidos":54,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-20","cantidad":1,"valor":1000.0}
+request=21 http=200 body={"id_pedidos":55,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-21","cantidad":1,"valor":1000.0}
+request=22 http=200 body={"id_pedidos":56,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-22","cantidad":1,"valor":1000.0}
+request=23 http=200 body={"id_pedidos":57,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-23","cantidad":1,"valor":1000.0}
+request=24 http=200 body={"id_pedidos":58,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-24","cantidad":1,"valor":1000.0}
+request=25 http=200 body={"id_pedidos":59,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-25","cantidad":1,"valor":1000.0}
+request=26 http=200 body={"id_pedidos":60,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-26","cantidad":1,"valor":1000.0}
+request=27 http=200 body={"id_pedidos":61,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-27","cantidad":1,"valor":1000.0}
+request=28 http=200 body={"id_pedidos":62,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-28","cantidad":1,"valor":1000.0}
+request=29 http=200 body={"id_pedidos":63,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-29","cantidad":1,"valor":1000.0}
+request=30 http=200 body={"id_pedidos":64,"id_cliente":1,"producto":"Chaos data-service 20260903T051845Z-30","cantidad":1,"valor":1000.0}
+TOTAL_REQUESTS=30
+SUCCESSFUL_REQUESTS=30
+ERROR_REQUESTS=0
+EXPECTED_ERROR_RATE_PERCENT=10.00
+=== CHAOS LOGS ===
+[]
+EVIDENCE_PATH=evidencias/laboratorio-integrador/aws/chaos/01-data-service-error-20260903T051845Z.log
+=== ROLLBACK ===
+-----------------------------------------------------------------------
+|                            UpdateService                            |
++---------+-------------------------------------+----------+----------+
+| desired |                name                 | running  | status   |
++---------+-------------------------------------+----------+----------+
+|  1      |  otel-fargate-lab-lab-data-service  |  1       |  ACTIVE  |
++---------+-------------------------------------+----------+----------+
+
+ROLLBACK_COMPLETED=true
+TEMP_TASK_DEREGISTERED=true

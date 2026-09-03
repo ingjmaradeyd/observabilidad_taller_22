@@ -68,3 +68,23 @@ output "rds_master_secret_arn" {
   value       = aws_db_instance.postgres.master_user_secret[0].secret_arn
   sensitive   = true
 }
+
+output "rds_migrator_log_group_name" {
+  description = "CloudWatch Logs group for the one-shot RDS migrator task."
+  value       = aws_cloudwatch_log_group.rds_migrator.name
+}
+
+output "rds_migrator_security_group_id" {
+  description = "Security group ID for the one-shot RDS migrator task."
+  value       = aws_security_group.rds_migrator.id
+}
+
+output "rds_migrator_task_definition_arn" {
+  description = "Task definition ARN for the one-shot RDS migrator."
+  value       = aws_ecs_task_definition.rds_migrator.arn
+}
+
+output "rds_migrator_subnet_ids" {
+  description = "Public subnet IDs required when running the one-shot RDS migrator."
+  value       = aws_subnet.public[*].id
+}

@@ -1,0 +1,11 @@
+EXPERIMENT_START_UTC=20260903T061336Z
+EXPERIMENT=data-service-error-rate
+TASK_DEFINITION_REVISION=5
+IMAGE_TAG=1ffbe23
+REQUEST_PATH=Service A ECS Exec -> http://data-service:8002/pedidos
+TOTAL_REQUESTS=30
+SUCCESSFUL_REQUESTS=30
+ERROR_REQUESTS=0
+OBSERVED_ERROR_RATE_PERCENT=0.00
+RESULT=NOT_DEMONSTRATED
+NOTE=All direct requests returned HTTP 201; no controlled 503 was observed despite CHAOS_ENABLED=true and CHAOS_ERROR_RATE=0.1 in the task definition. Preserve as diagnostic evidence, not as successful chaos validation.

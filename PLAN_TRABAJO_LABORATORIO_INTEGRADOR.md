@@ -6,10 +6,10 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 
 ## Estado general
 
-- Fase actual: unidad 2 de ECS y Service Connect implementada, validada y cerrada mediante revisión técnica independiente 4R.
+- Fase actual: Security Hub está habilitado en la cuenta AWS nueva y sus estándares están en `READY`; la topología Terraform completa ya fue aplicada (94 recursos creados), las cuatro imágenes están verificadas en ECR, la tarea migratoria RDS terminó con `exitCode=0`, A/B/data-service y ADOT están activos, y el flujo funcional/OTel ya tiene evidencia AWS. La instrumentación de métricas y el pipeline OTLP están configurados; VPC Flow Logs ya entrega registros `ACCEPT/REJECT` y tiene una alarma operativa. Ambos experimentos de caos fueron realizados; el de `data-service` produjo 3/30 errores controlados y la alarma estática AIOps detectó `DataServiceChaosErrors=3` con MTTD de 53,213 s. La alarma de anomalías permanece `OK` por historial insuficiente. El rollback fue aplicado y el equipo confirmó posteriormente que Service B y `data-service` quedaron `COMPLETED` y estables; el archivo 07 conserva solo una captura intermedia `IN_PROGRESS`. Faltan MTTD de anomalía dinámica, p99 durante caos, correlación p99/`trace_id`, comparación de ruido/accionabilidad, dashboard de seguridad, madurez y cierre de entrega.
 - Alcance aprobado: **únicamente AWS**.
 - Impacto aceptado: no se cumplirá literalmente el nivel Excelente de los criterios que exigen AWS y GCP.
-- Próximo hito: preparar y publicar imágenes versionadas e inmutables en ECR mediante un work unit aprobado; todavía no se ejecutarán `terraform plan` ni `apply` sin revisión previa.
+- Próximo hito: realizar la revisión final del informe, preparar el commit/tag y efectuar la entrega sin afirmar brechas no demostradas.
 - Rama base: `developer`.
 - Commit remoto verificado: `3ce9dcbd0f963844a2216ee4b4deb7aef36228d0`.
 - Repositorio: público y sincronizado con GitHub.
@@ -50,13 +50,13 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 | Arquitectura AWS | Parcial | Terraform existe, pero no demuestra despliegue vigente; A/B y ADOT parten con conteos no funcionales y `OTEL_ENABLED=false`. |
 | Arquitectura GCP | Fuera de alcance | Se acepta explícitamente la pérdida de puntaje asociada a no implementar la segunda nube. |
 | Tercer microservicio | Implementado localmente y preparado en IaC | `data-service` tiene API, persistencia, pruebas e instrumentación local; falta desplegarlo contra RDS y conservar evidencia AWS. |
-| Tres pilares OTel | Parcial | A/B/data-service tienen instrumentación local, pero AWS mantiene OTel deshabilitado durante el bootstrap; falta habilitación y evidencia correlacionada en AWS. |
+| Tres pilares OTel | Parcial | A/B/data-service tienen instrumentación de logs, métricas y trazas; AWS tiene OTel habilitado con ADOT activo y evidencia correlacionada en logs/trazas. El alcance sigue siendo únicamente AWS. |
 | Service mesh/L7 | Implementado en IaC, no desplegado | ECS Service Connect está configurado para A/B/data con alias privados; faltan despliegue y evidencia operativa L7 en AWS. |
-| AIOps | Ausente | Faltan AWS DevOps Guru, baseline dinámico, regla `2σ`, correlación con p99/trace ID y comparación de ruido. |
-| Red | Ausente | Faltan AWS VPC Flow Logs, análisis y alertas de tráfico anómalo. |
-| Seguridad observable | Parcial mínimo | Existen IAM, SG, cifrado y escaneo ECR; faltan Security Hub/SCC, señales, alertas y dashboard. |
-| Chaos solicitado | Ausente | El experimento previo no reemplaza los dos nuevos: 200 ms en Service B y 10 % de errores en data-service. |
-| SRE | Ausente | Faltan SLI/SLO formales, error budget, MTTD y evaluación de accionabilidad. |
+| AIOps | Parcial | Terraform fue aplicado; la métrica `DataServiceChaosErrors=3` y la alarma estática en `ALARM` evidencian detección de los tres errores controlados, con MTTD de 53,213 s. La alarma de anomalías queda `OK` por historial insuficiente. Faltan aprendizaje de la banda, MTTD de anomalía dinámica, AWS DevOps Guru, p99 frente al SLO, correlación con `trace_id` y comparación cuantitativa de ruido/accionabilidad. |
+| Red | Parcial | VPC Flow Logs está activo, entrega streams recientes y registra tráfico `ACCEPT/REJECT`; falta el análisis explícito N-S/E-W/entre servicios y un dashboard. |
+| Seguridad observable | Parcial | IAM, SG, cifrado, escaneo ECR y Security Hub existen; falta consolidar señales, findings/CVEs, alertas y dashboard operativo. |
+| Chaos solicitado | Parcial alto | Los dos experimentos AWS fueron realizados; el de errores de `data-service` observó 10 % de fallos, el rollback fue aplicado y estable, y la alarma estática tuvo MTTD de 53,213 s. Faltan MTTD de anomalía dinámica, p99 durante caos, correlación `trace_id` y comparación de ruido/accionabilidad. |
+| SRE | Parcial | La ventana de caos tuvo 90 % de disponibilidad, 10 % de errores y consumió diez veces el presupuesto del 1 %; el MTTD de la alarma estática fue 53,213 s. Faltan p99 durante caos, MTTD de anomalía dinámica y evaluación de accionabilidad. |
 | Madurez | Ausente | Falta autoevaluación de ocho dominios y roadmap de tres meses. |
 | Evidencia publicable | Parcial | Los resultados anteriores son locales e ignorados por Git; falta un paquete liviano y trazable de evidencias. |
 | Entrega | Parcial | Repositorio público listo; faltan demostración técnica y tag `v1.0`. |
@@ -127,12 +127,33 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 - [x] Actualizar `terraform.tfvars.example` y el README de IaC con etiquetas inmutables, bootstrap seguro, topología sin NAT y ausencia de exposición pública para B/data.
 - [x] Validar localmente la unidad 2 con `terraform fmt -check -recursive`, `terraform validate`, `terraform graph -type=plan` y aserciones estáticas de arquitectura. No se ejecutaron `terraform plan`, `apply` ni llamadas a AWS.
 - [x] Completar la revisión técnica independiente 4R de la unidad 2 y verificar la corrección de los dos hallazgos críticos confirmados: health check ECS de Service B y plataforma `LINUX/X86_64` alineada con builds `linux/amd64`.
-- [ ] Habilitar OTel para A, B y `data-service` cuando ADOT esté publicado y operativo; mantenerlo deshabilitado durante el bootstrap.
+- [x] Habilitar OTel para A, B y `data-service` cuando ADOT esté publicado y operativo; mantenerlo deshabilitado durante el bootstrap. Aplicado en AWS con ADOT activo.
 - [x] Revisar y conservar en cero los conteos deseados de A, B, `data-service` y ADOT durante el bootstrap de ECR/RDS.
-- [ ] Publicar imágenes versionadas en ECR; evitar depender de tags mutables o `latest`.
-- [ ] Ejecutar validaciones de Terraform y documentar el plan antes de aplicar.
-- [ ] Desplegar la base AWS en sandbox y ejecutar smoke tests A->B->RDS.
-- [ ] Verificar exportación real de logs, métricas y trazas a los backends elegidos.
+- [x] Crear los cuatro repositorios ECR mediante Terraform en la cuenta AWS nueva. El `apply` completo creó los repositorios; el bloqueo correspondía únicamente al sandbox anterior.
+- [x] Publicar y verificar las cuatro imágenes versionadas en ECR con el tag inmutable `abcdef1` y plataforma `linux/amd64`; evitar depender de tags mutables o `latest`.
+- [x] Implementar en Terraform una tarea ECS/Fargate migratoria one-shot, con security group dedicado, secreto RDS administrado y validación idempotente del esquema. Ejecutar y validar la tarea en AWS antes de activar B y `data-service`.
+- [x] Revisar el plan incremental del migrador: `8 to add, 0 to change, 0 to destroy`; incluye únicamente log group, task definition y security group/reglas de red del migrador.
+- [x] Aprobar explícitamente la aplicación del plan incremental de 8 recursos del migrador.
+- [x] Confirmar en el estado Terraform la creación de los 8 recursos del migrador RDS.
+- [x] Ejecutar la tarea migratoria one-shot en AWS y obtener `lastStatus=STOPPED` con `exitCode=0`; conservar todavía el log de éxito como evidencia.
+- [x] Conservar el mensaje de éxito de la migración RDS en `evidencias/laboratorio-integrador/aws/rds/01-rds-migrator-success.log`.
+- [x] Ejecutar validaciones de Terraform y documentar el plan antes de aplicar.
+- [x] Revisar el alcance del plan Terraform reproducible de la cuenta nueva: `94 to add, 0 to change, 0 to destroy`; la suma fue verificada por tipo de recurso y corresponde a la topología AWS completa. No se ejecutó `apply`.
+- [x] Aprobar explícitamente la aplicación del plan completo de 94 recursos en la cuenta AWS nueva.
+- [x] Aplicar el plan Terraform completo en la cuenta AWS nueva: `94 added, 0 changed, 0 destroyed`.
+- [x] Revisar el plan de activación ECS: `0 to add, 3 to change, 0 to destroy`; únicamente `desired_count` cambia de `0` a `1` en A, B y `data-service`.
+- [x] Aprobar explícitamente la activación de una tarea para A, B y `data-service`.
+- [x] Aplicar la activación ECS: `0 added, 3 changed, 0 destroyed`.
+- [x] Activar A, B y `data-service` con una tarea cada uno; la salud y el flujo de negocio siguen pendientes de verificación.
+- [x] Verificar en ECS A, B y `data-service` con `desired=1`, `running=1`, `pending=0` y estado `ACTIVE`.
+- [x] Ejecutar smoke test A→B→data-service→RDS. El primer intento devolvió `503 SERVICE_B_UNAVAILABLE`; después de verificar Service Connect, el reintento del `2026-09-03T03:18:15Z` respondió `/health` HTTP 200 y creó `id_pedidos=1` con HTTP 200. Evidencia: `evidencias/laboratorio-integrador/aws/ecs/02-smoke-test-rds-20260903T031815Z.log`.
+- [x] Conservar logs del proxy Service Connect del incidente: `evidencias/laboratorio-integrador/aws/service-connect/01-proxy-diagnostico-smoke-test.log`; muestran reinicios de Envoy y timeout inicial de endpoints, sin evidencia todavía de causa raíz definitiva.
+- [x] Desplegar la base AWS en sandbox y ejecutar smoke tests A->B->RDS; la línea base final respondió HTTP 200 y creó el pedido `id_pedidos=1`.
+- [x] Activar ADOT (`adot_desired_count=1`) y `OTEL_ENABLED=true` en A, B y `data-service`; Terraform aplicó `3 added, 4 changed, 3 destroyed` y los cuatro servicios quedaron con `desired=1`, `running=1`, `pending=0`, `ACTIVE`. Evidencia: `evidencias/laboratorio-integrador/aws/ecs/03-otel-activation-status-success.txt`.
+- [x] Corregir las reglas de security groups para permitir OTLP/gRPC TCP 4317 entre A/B/data-service y ADOT, usando referencias entre security groups.
+- [x] Aplicar la corrección de red OTLP: Terraform aplicó `4 added, 0 changed, 0 destroyed` (reglas SG TCP 4317 para A/B/data-service ↔ ADOT). La verificación de recepción/exportación queda en la siguiente actividad.
+- [x] Verificar exportación real de logs y trazas al backend elegido. La evidencia final confirma `CloudWatchLogs`/X-Ray en estado `ACTIVE`, una petición A→B→data-service→RDS con HTTP 200 y spans en `aws/spans` correlacionados entre los tres servicios mediante un mismo `traceId` (`evidencias/laboratorio-integrador/aws/observabilidad/04-otel-xray-active-20260903T043329Z.log`). Los errores HTTP 400 del archivo 03 son históricos, anteriores al cambio de destino.
+- [x] Mantener instrumentación de métricas OTel en A, B y `data-service` y su pipeline OTLP hacia CloudWatch (`opentelemetry_act2_2/observabilidad/aws/otel-collector-config-aws.yaml`). La evidencia principal de correlación AWS se conserva en logs y trazas.
 - [ ] Documentar endpoints, IDs de despliegue y evidencia mínima sin exponer secretos.
 
 ### Diseño aprobado de ECR
@@ -142,7 +163,7 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 - **Versionado:** tags de imagen explícitos e inmutables; no depender de `latest`.
 - **Trazabilidad:** nombres y etiquetas coherentes con el ambiente y componente.
 - **Evidencia posterior:** configuración `scanOnPush`, resultado del escaneo y conteo de CVEs por severidad sin publicar identificadores sensibles.
-- **Límite actual:** preparar y validar el código; no ejecutar `terraform apply` hasta aprobar presupuesto, plan y recursos que se crearán.
+- **Límite actual:** el código y el plan de cuatro repositorios fueron revisados. La creación queda pendiente de aplicar el plan completo en la cuenta AWS nueva; no se utilizarán repositorios preprovisionados.
 
 **Criterio de salida:** A y B funcionan en AWS con telemetría correlacionada y despliegue reproducible.
 
@@ -176,12 +197,20 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 - [x] Verificar que la tabla `pedidos` existe en el volumen PostgreSQL anterior y todavía no contiene `idempotency_key` ni `request_fingerprint`.
 - [x] Ejecutar explícitamente la migración idempotente `002-pedidos-idempotency.sql` sobre el volumen PostgreSQL existente antes del smoke test.
 - [x] Verificar el esquema posmigración: columnas `NOT NULL`, índice único y ausencia de valores nulos.
-- [ ] Conectar realmente `data-service` a AWS RDS mediante secretos administrados y conservar evidencia de la prueba.
+- [x] Conectar realmente `data-service` a AWS RDS mediante secretos administrados y conservar evidencia de la prueba. El smoke test AWS creó `id_pedidos=1` con HTTP 200 a través de A→B→data-service→RDS (`evidencias/laboratorio-integrador/aws/ecs/02-smoke-test-rds-20260903T031815Z.log`).
+- [x] Implementar la migración one-shot de RDS como task definition ECS/Fargate, usando la imagen existente de `data-service`, secret injection por execution role, un security group dedicado y logs de CloudWatch.
+- [ ] Ejecutar la tarea one-shot en AWS y conservar la salida sanitizada que confirma tablas `clientes`/`pedidos`, columnas de idempotencia, índice único y cliente semilla.
 - [x] Configurar en Terraform el endpoint, usuario y secreto administrado de RDS para `data-service`, utilizando el rol de ejecución autorizado y sin permiso de secreto en el task role.
 - [x] Definir en Terraform conectividad restringida para que `data-service` acceda a RDS sin exponer la base públicamente.
 - [x] Aprobar ECS Service Connect como reemplazo técnico de AWS App Mesh por su fin de soporte anunciado.
 - [x] Implementar en Terraform ECS Service Connect para A, B y `data-service`, con A como cliente y alias `service-b:8001` y `data-service:8002`. La operación real en AWS sigue pendiente.
-- [ ] Verificar en AWS el namespace, el registro saludable, la resolución de alias y los logs L7 de Service Connect.
+- [x] Verificar en AWS el namespace y el registro saludable de `service-b` y `data-service` en Cloud Map; cada uno tiene una instancia activa con IP/puerto (`evidencias/laboratorio-integrador/aws/service-connect/02-cloudmap-registro-instances.txt`).
+- [x] Verificar en AWS la configuración efectiva de Service Connect en la revisión ECS: `enabled=true`, namespace correcto y alias `service-b:8001` (`evidencias/laboratorio-integrador/aws/service-connect/03-ecs-service-connect-config.txt`).
+- [x] Verificar desde una tarea de `service-a` la resolución del alias `service-b` y la conectividad HTTP a `http://service-b:8001/clientes/1`; la captura quedó en `evidencias/laboratorio-integrador/aws/service-connect/04-ecs-exec-conectividad-service-b.png`. Los logs L7 y la correlación de traza AWS siguen pendientes.
+- [x] Preparar temporalmente ECS Exec solo para `service-a` y agregar permisos `ssmmessages` a su task role dedicado (`obsact22/ecs.tf`, `obsact22/iam.tf`).
+- [x] Aplicar la revisión ECS de diagnóstico: política `ssmmessages` creada y `enable_execute_command=true` en `service-a` (`1 added, 1 changed, 0 destroyed`).
+- [x] Forzar un nuevo deployment de `service-a` y verificar la tarea nueva: `enableExecuteCommand=true`, estado `HEALTHY` y `ExecuteCommandAgent=RUNNING`.
+- [ ] Retirar ECS Exec temporal de `service-a` después de completar el diagnóstico.
 - [x] Documentar la sustitución de App Mesh por Service Connect y distinguir el código preparado de la evidencia operativa aún pendiente.
 - [ ] Capturar evidencia L7 y correlación de `trace_id` a través de los tres servicios en AWS.
 
@@ -219,35 +248,49 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 
 ## 6. Fase 3 - SLI, SLO y error budget
 
-- [ ] Definir SLIs de disponibilidad, `error_rate`, latencia p99 y throughput.
-- [ ] Aprobar SLO y ventana de medición antes de configurar alertas o caos.
-- [ ] Definir fórmula y presupuesto de error para la ventana seleccionada.
-- [ ] Ejecutar baseline controlado y calcular media, desviación estándar y percentiles.
-- [ ] Persistir un resumen reproducible del baseline sin subir archivos masivos.
+- [x] Definir SLIs de disponibilidad, `error_rate`, latencia p99 y throughput.
+- [x] Aprobar SLO y ventana de medición antes de configurar alertas o caos.
+- [x] Definir fórmula y presupuesto de error para la ventana seleccionada.
+- [x] Ejecutar baseline controlado y calcular media, desviación estándar y percentiles.
+- [x] Persistir un resumen reproducible del baseline sin subir archivos masivos (`evidencias/laboratorio-integrador/aws/chaos/00-baseline-20260903T050115Z.log`).
+
+**Baseline AWS registrado:** 30 solicitudes, disponibilidad 100 %, `error_rate` 0 %, latencia media 280,704 ms, desviación estándar 82,183 ms, p95 522,669 ms y p99 estimado por nearest-rank (máximo de la muestra) 573,979 ms.
+
+**SLO aprobado:** ventana de cinco minutos; disponibilidad ≥99 %, `error_rate` ≤1 % y latencia p99 ≤750 ms. El throughput se medirá como solicitudes completadas por minuto. El error budget de disponibilidad/error es el 1 % de las solicitudes de la ventana; una alerta de caos debe registrar el consumo observado frente a ese presupuesto.
 
 **Criterio de salida:** baseline cuantitativo, SLO y error budget utilizables por AIOps y chaos.
 
 ## 7. Fase 4 - AIOps y correlación
 
 - [ ] Configurar AWS DevOps Guru como servicio administrado de detección.
-- [ ] Configurar detección automática sobre data-service.
-- [ ] Implementar la condición dinámica `error_rate > baseline + 2σ`.
+- [x] Implementar y aplicar la detección de errores controlados de `data-service`, con una métrica derivada de logs y una alarma estática de control. La evidencia registra `DataServiceChaosErrors=3` y la alarma estática en `ALARM` (`evidencias/laboratorio-integrador/aws/aiops/03-aiops-cloudwatch-datapoint-20260903T064600Z.log`).
+- [x] Implementar y aplicar la condición dinámica con `ANOMALY_DETECTION_BAND(..., 2)` sobre la métrica de errores controlados. La alarma permanece `OK` por historial insuficiente; el aprendizaje de CloudWatch sigue pendiente (`evidencias/laboratorio-integrador/aws/aiops/03-aiops-cloudwatch-datapoint-20260903T064600Z.log`).
 - [ ] Combinarla con `latency_p99 > SLO_threshold`.
 - [ ] Enriquecer la alerta con el `trace_id` de una solicitud fallida.
-- [ ] Crear una alerta estática equivalente como grupo de control.
+- [x] Crear una alerta estática equivalente como grupo de control (`otel-fargate-lab-lab-data-service-chaos-errors-static`).
 - [ ] Ejecutar una prueba repetible y medir alertas totales, falsas/ruidosas y accionables en ambos enfoques.
 - [ ] Documentar cuantitativamente la reducción de ruido.
+
+**Pendiente operativo de AIOps:** esperar el aprendizaje de la banda de anomalías y medir su MTTD; demostrar p99 frente al SLO, correlacionar una alerta con `trace_id`, ejecutar el grupo de control y comparar cuantitativamente ruido/accionabilidad. AWS DevOps Guru no está implementado.
 
 **Criterio de salida:** anomalía detectada, alerta correlacionada con trace ID y comparación cuantitativa contra umbrales estáticos.
 
 ## 8. Fase 5 - Network & Security Observability
 
-- [ ] Habilitar VPC Flow Logs en AWS.
+- [x] Habilitar VPC Flow Logs en AWS mediante Terraform y verificar delivery/consulta básica (`evidencias/laboratorio-integrador/aws/network/01-vpc-flow-logs-20260903T044925Z.log`).
+- [x] Diseñar e implementar en Terraform la unidad de VPC Flow Logs: log group dedicado con retención de tres días, rol IAM mínimo, tráfico `ALL`, agregación de 60 segundos, métrica y alarma para `REJECT` (`obsact22/vpc_flow_logs.tf`).
 - [ ] Definir consultas o métricas para tráfico Norte-Sur, Este-Oeste y entre servicios.
 - [ ] Configurar alertas ante tráfico anómalo o conexiones no esperadas.
+- [x] Aplicar la unidad IaC de Flow Logs en AWS; el delivery quedó `ACTIVE`, con streams recientes y registros `ACCEPT/REJECT` en la evidencia de red.
+- [ ] Ejecutar consultas categorizadas y conservar evidencias específicas de tráfico Norte-Sur, Este-Oeste y entre servicios.
 - [x] Evaluar Security Hub como opción de referencia para la arquitectura de seguridad.
 - [x] Aprobar ECR Basic Scanning + VPC Flow Logs + CloudWatch como experimento de arquitectura directa para analizar sus beneficios.
-- [x] Verificar ECR en el sandbox: escaneo `BASIC`, sin reglas globales y sin repositorios existentes.
+- [x] Verificar ECR en el sandbox anterior: escaneo `BASIC`, sin reglas globales y sin repositorios existentes.
+- [x] Habilitar AWS Security Hub en la cuenta nueva, región `us-east-1`.
+- [x] Habilitar Security Hub v2 y confirmar sus tres recorders internos: assets, assets global y CSPM.
+- [x] Verificar que los estándares AWS Foundational Security Best Practices v1.0.0 y CIS AWS Foundations Benchmark v1.2.0 quedaron en estado `READY`.
+- [x] Conservar captura de consola de Security Hub CSPM con ambos estándares visibles (`evidencias/laboratorio-integrador/aws/security-hub/02-security-hub-cspm-standards.png`).
+- [x] Conservar la salida CLI sanitizada de estándares `READY` (`evidencias/laboratorio-integrador/aws/security-hub/01-standards-ready.json`).
 - [ ] Implementar ECR Basic Scanning y publicar métricas de CVEs activos en CloudWatch.
 - [ ] Definir una señal controlada de intentos de autenticación fallidos.
 - [ ] Integrar hallazgos de CVEs activos desde ECR/servicio de seguridad.
@@ -260,35 +303,38 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 
 - [ ] Crear plan de Game Day específico para el sandbox cloud.
 - [ ] Definir condiciones de aborto, blast radius, duración y rollback de ambos experimentos.
-- [ ] Experimento 1: inyectar 200 ms de latencia en Service B.
-- [ ] Experimento 2: inyectar 10 % de errores en data-service.
-- [ ] Capturar timestamp de inicio de cada inyección.
-- [ ] Capturar timestamp de detección y emisión de la alerta.
-- [ ] Calcular MTTD y verificar el objetivo estricto `< 2 minutos`.
-- [ ] Confirmar rollback y estado saludable posterior.
-- [ ] Determinar si se degradó el SLO.
-- [ ] Calcular cuánto error budget se consumió.
+- [x] Experimento 1: inyectar 200 ms de latencia en Service B; llamada directa desde Service A devolvió HTTP 200 en 234 ms (`evidencias/laboratorio-integrador/aws/chaos/03-service-b-direct-latency-cloudshell.log`).
+- [x] Implementar en Terraform la configuración del experimento 2 en `data-service`, con inyección deshabilitada por defecto y tasa de error configurable.
+- [x] Experimento 2: inyectar 10 % de errores en data-service; 30 llamadas directas produjeron 27 HTTP 201 y 3 HTTP 503 `CHAOS_INJECTED` (10 % observado) (`evidencias/laboratorio-integrador/aws/chaos/06-data-service-direct-ip-10pct-20260903T062008Z.log`).
+- [x] Capturar timestamp de inicio de cada inyección (`20260903T062008Z` para el experimento 2).
+- [x] Capturar timestamp de detección y emisión de la alarma estática: transición `OK_TO_ALARM` en `20260903T064719.213Z` (`evidencias/laboratorio-integrador/aws/aiops/05-mttd-static-alarm-20260903T064719Z.log`).
+- [x] Calcular MTTD de la alarma estática de control: 53,213 s, menor que 120 s (`evidencias/laboratorio-integrador/aws/aiops/05-mttd-static-alarm-20260903T064719Z.log`). El MTTD de anomalía dinámica sigue pendiente.
+- [x] Aplicar rollback del experimento 2; Terraform reportó `2 added, 2 changed, 2 destroyed` y el equipo confirmó posteriormente Service B y `data-service` en `COMPLETED` y estables. `07-chaos-rollback-20260903T062602Z.log` conserva una captura intermedia `IN_PROGRESS`, por lo que no sustituye una tabla final.
+- [x] Determinar degradación de disponibilidad y `error_rate`: 90 % y 10 %, respectivamente, frente a objetivos ≥99 % y ≤1 %; ambos incumplidos en la ventana.
+- [x] Calcular consumo de error budget: el 10 % de errores consumió diez veces el presupuesto de 1 % de la ventana.
 - [ ] Evaluar si cada alerta fue accionable y estuvo enriquecida con trace ID.
 - [ ] Guardar capturas, resúmenes de métricas, trazas y logs necesarios.
 
 **Criterio de salida:** dos experimentos ejecutados, MTTD inferior a dos minutos y análisis de SLO/error budget/accionabilidad.
 
+**Análisis parcial del experimento 2:** 30 solicitudes con 27 HTTP 201 y 3 HTTP 503 implican disponibilidad de 90 % y `error_rate` de 10 %. Frente al SLO aprobado de disponibilidad ≥99 % y `error_rate` ≤1 %, la ventana supera diez veces el presupuesto de error del 1 %. La alarma estática detectó el datapoint en 53,213 s. La latencia p99 durante el caos no fue medida; por ello todavía no se puede cerrar la evaluación completa del SLO ni del error budget.
+
 ## 10. Fase 7 - Madurez y roadmap
 
 - [ ] Confirmar los ocho dominios exactos del Observability Foundation Blueprint que utilizará la asignatura.
-- [ ] Autoevaluar cada dominio en escala de madurez 1–5 con evidencia.
-- [ ] Identificar brechas entre el nivel actual y el siguiente nivel.
-- [ ] Crear roadmap de mejora a tres meses con prioridad, responsable, fecha y criterio de éxito.
-- [ ] Revisar que cada iniciativa del roadmap sea accionable y medible.
+- [x] Preparar una autoevaluación operativa de ocho dominios con evidencia y nivel 1–5 en el informe final; queda pendiente validarla contra el blueprint exacto de la asignatura.
+- [x] Identificar brechas entre el nivel actual y el siguiente nivel en el informe final.
+- [x] Preparar un roadmap de mejora a tres meses con prioridad, responsable sugerido y criterio de éxito en el informe final.
+- [x] Revisar que cada iniciativa del roadmap sea accionable y medible en el informe final.
 
 **Criterio de salida:** autoevaluación completa y roadmap verificable de tres meses.
 
 ## 11. Fase 8 - Evidencias, demostración y entrega
 
-- [ ] Crear `docs/evidencias/` con resúmenes pequeños, capturas y referencias a consultas reproducibles.
+- [x] Preparar el informe final con índice de evidencias, arquitectura, resultados, brechas, madurez, roadmap y guion de demostración (`evidencias/laboratorio-integrador/INFORME_FINAL_LABORATORIO_INTEGRADOR_AWS.md`).
 - [ ] Evitar subir credenciales, secretos, estados Terraform sensibles o archivos raw masivos.
-- [ ] Documentar arquitectura final y flujo de correlación entre métricas, logs y trazas.
-- [ ] Preparar guion de demostración técnica en vivo con ruta feliz y contingencia.
+- [x] Documentar arquitectura final y flujo de correlación entre métricas, logs y trazas en el informe final.
+- [x] Preparar guion de demostración técnica en vivo en el informe final; la demostración final continúa pendiente.
 - [ ] Mostrar en la demostración: tres servicios en AWS, mesh, anomalía, alerta, dashboard de seguridad y chaos.
 - [ ] Auditar el resultado contra la rúbrica y declarar explícitamente los criterios multicloud no cubiertos.
 - [ ] Confirmar que el repositorio continúe público.
@@ -321,7 +367,9 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 | 2026-09-01 | Implementar únicamente en AWS y aceptar el impacto sobre los criterios multicloud. | Aprobada por el equipo. |
 | 2026-09-02 | Exigir `Idempotency-Key` para crear pedidos y persistirlo con unicidad; una clave reutilizada con otro payload produce conflicto. | Aprobada por el equipo. |
 | 2026-09-02 | Usar temporalmente una topología AWS sin NAT para el sandbox: ECS/Fargate en subredes públicas con ingreso bloqueado, ALB solo para A y RDS privado. | Aprobada por el equipo como optimización académica de costos; no es el patrón recomendado para producción. |
+| 2026-09-02 | Continuar el despliegue en una cuenta AWS nueva sin las restricciones de permisos del sandbox académico anterior. | Aprobada por el equipo; se mantiene el alcance exclusivamente AWS. |
+| 2026-09-02 | Aplicar la topología Terraform completa en la cuenta AWS nueva. | Ejecutada: 94 recursos creados sin cambios ni destrucciones. |
 
 ## Próximo paso
 
-Completar la revisión independiente de la unidad 2 de ECS y Service Connect. Si no quedan bloqueadores, avanzar a la unidad 3 para construir y publicar imágenes con tags inmutables, todavía sin ejecutar `terraform plan`, `apply` ni otras operaciones de infraestructura contra AWS.
+Revisar el informe final y las evidencias, ejecutar la demostración técnica, auditar el contenido contra la rúbrica, y solo después crear/publicar el tag `v1.0`. Las brechas técnicas restantes (AIOps dinámico, p99 durante caos, correlación `trace_id`, ruido/accionabilidad y dashboard de seguridad) deben permanecer explícitas; no se deben presentar como completadas.

@@ -1,0 +1,10 @@
+EVIDENCE_TYPE=direct_service_connect_latency
+SOURCE=AWS_CLOUDSHELL
+SESSION_ID=ecs-execute-command-vbk2xtrcbl46ktpli4vledfeqi
+TASK=service-a -> service-b
+REQUEST=GET http://service-b:8001/clientes/1
+RESPONSE={"id_cliente":1,"nombre":"Cliente Game Day","email":"cliente1@gameday.local"}
+HTTP_STATUS=200
+ELAPSED_SECONDS=0.234
+EXPECTED_CONFIGURED_LATENCY_SECONDS=0.200
+RESULT=successful_request_with_expected_latency_injection

@@ -1,0 +1,429 @@
+TIMESTAMP_UTC=20260903T040509Z
+=== HEALTH ===
+{"message":"Servicio Clientes - A","status":"EJECUTANDO"}
+HTTP_STATUS=200
+=== REQUEST A -> B -> DATA-SERVICE -> RDS ===
+{"id_pedidos":3,"id_cliente":1,"producto":"Evidencia OTel AWS","cantidad":1,"valor":10000.0}
+HTTP_STATUS=200
+=== LOG_GROUP=/ecs/otel-fargate-lab-lab/service-a ===
+2026-09-03T03:55:47 INFO:     10.20.1.87:8356 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:55:47 INFO:     10.20.2.36:42570 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:17 INFO:     10.20.1.87:1274 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:17 INFO:     10.20.2.36:4962 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:47 INFO:     10.20.1.87:35332 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:47 INFO:     10.20.2.36:10632 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:17 INFO:     10.20.1.87:19498 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:17 INFO:     10.20.2.36:17894 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:47 INFO:     10.20.1.87:57926 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:47 INFO:     10.20.2.36:9346 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:17 INFO:     10.20.1.87:17832 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:17 INFO:     10.20.2.36:26900 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:47 INFO:     10.20.1.87:8992 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:47 INFO:     10.20.2.36:3772 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:17 INFO:     10.20.1.87:61612 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:17 INFO:     10.20.2.36:52360 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:47 INFO:     10.20.1.87:26298 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:47 INFO:     10.20.2.36:33280 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:17 INFO:     10.20.1.87:33926 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:17 INFO:     10.20.2.36:31554 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:47 INFO:     10.20.1.87:64670 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:47 INFO:     10.20.2.36:61876 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:17 INFO:     10.20.1.87:48534 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:17 INFO:     10.20.2.36:38716 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:47 INFO:     10.20.1.87:9650 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:47 INFO:     10.20.2.36:6146 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:17 INFO:     10.20.2.36:59594 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:17 INFO:     10.20.1.87:14912 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:47 INFO:     10.20.2.36:61036 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:47 INFO:     10.20.1.87:39294 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:17 INFO:     10.20.1.87:49144 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:17 INFO:     10.20.2.36:55018 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:47 INFO:     10.20.1.87:26142 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:47 INFO:     10.20.2.36:56144 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:17 INFO:     10.20.1.87:1972 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:17 INFO:     10.20.2.36:53234 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:47 INFO:     10.20.1.87:37894 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:47 INFO:     10.20.2.36:46724 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:05:10 INFO:     10.20.1.87:55782 - "GET /service-a/health HTTP/1.1" 200 OK
+2026-09-03T04:05:10 INFO:     10.20.2.36:39092 - "POST /service-a/pedidos/crear HTTP/1.1" 200 OK
+2026-09-03T04:05:17 INFO:     10.20.1.87:4488 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:05:17 INFO:     10.20.2.36:21620 - "GET /health HTTP/1.1" 200 OK
+=== LOG_GROUP=/ecs/otel-fargate-lab-lab/service-b ===
+2026-09-03T03:55:36 INFO:     127.0.0.1:54848 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:06 INFO:     127.0.0.1:44834 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:36 INFO:     127.0.0.1:46744 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:06 INFO:     127.0.0.1:37384 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:36 INFO:     127.0.0.1:59884 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:06 INFO:     127.0.0.1:36456 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:36 INFO:     127.0.0.1:43814 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:06 INFO:     127.0.0.1:36152 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:36 INFO:     127.0.0.1:47532 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:06 INFO:     127.0.0.1:53670 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:36 INFO:     127.0.0.1:37678 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:06 INFO:     127.0.0.1:49358 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:36 INFO:     127.0.0.1:58770 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:06 INFO:     127.0.0.1:55634 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:36 INFO:     127.0.0.1:34726 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:06 INFO:     127.0.0.1:38688 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:36 INFO:     127.0.0.1:55928 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:06 INFO:     127.0.0.1:32778 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:36 INFO:     127.0.0.1:40102 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:05:06 INFO:     127.0.0.1:59156 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:05:10 INFO:     127.0.0.1:59170 - "GET /clientes/1 HTTP/1.1" 200 OK
+=== LOG_GROUP=/ecs/otel-fargate-lab-lab/data-service ===
+2026-09-03T03:55:41 INFO:     127.0.0.1:60188 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:11 INFO:     127.0.0.1:59196 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:56:41 INFO:     127.0.0.1:51402 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:11 INFO:     127.0.0.1:55766 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:57:41 INFO:     127.0.0.1:38498 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:11 INFO:     127.0.0.1:57292 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:58:41 INFO:     127.0.0.1:35042 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:11 INFO:     127.0.0.1:48656 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T03:59:41 INFO:     127.0.0.1:40400 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:11 INFO:     127.0.0.1:41700 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:00:41 INFO:     127.0.0.1:47984 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:11 INFO:     127.0.0.1:54556 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:01:41 INFO:     127.0.0.1:43358 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:11 INFO:     127.0.0.1:45996 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:02:41 INFO:     127.0.0.1:38850 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:11 INFO:     127.0.0.1:58476 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:03:41 INFO:     127.0.0.1:32908 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:11 INFO:     127.0.0.1:56224 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:04:41 INFO:     127.0.0.1:36996 - "GET /health HTTP/1.1" 200 OK
+2026-09-03T04:05:10 INFO:     127.0.0.1:55798 - "POST /pedidos HTTP/1.1" 201 Created
+2026-09-03T04:05:11 INFO:     127.0.0.1:55800 - "GET /health HTTP/1.1" 200 OK
+=== LOG_GROUP=/ecs/lab/adot-collector ===
+2026-09-03T03:59:40 2026-09-03T03:59:40.314Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T03:59:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T03:59:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T03:59:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T03:59:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T03:59:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T03:59:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T03:59:40 sync.(*WaitGroup).Go.func1
+2026-09-03T03:59:40 	sync/waitgroup.go:258
+2026-09-03T03:59:45 2026-09-03T03:59:45.278Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T03:59:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T03:59:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T03:59:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T03:59:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T03:59:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T03:59:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T03:59:45 sync.(*WaitGroup).Go.func1
+2026-09-03T03:59:45 	sync/waitgroup.go:258
+2026-09-03T03:59:50 2026-09-03T03:59:50.278Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T03:59:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T03:59:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T03:59:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T03:59:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T03:59:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T03:59:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T03:59:50 sync.(*WaitGroup).Go.func1
+2026-09-03T03:59:50 	sync/waitgroup.go:258
+2026-09-03T04:00:10 2026-09-03T04:00:10.281Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:00:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:00:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:00:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:00:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:00:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:00:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:00:10 sync.(*WaitGroup).Go.func1
+2026-09-03T04:00:10 	sync/waitgroup.go:258
+2026-09-03T04:00:15 2026-09-03T04:00:15.282Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:00:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:00:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:00:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:00:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:00:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:00:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:00:15 sync.(*WaitGroup).Go.func1
+2026-09-03T04:00:15 	sync/waitgroup.go:258
+2026-09-03T04:00:20 2026-09-03T04:00:20.283Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:00:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:00:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:00:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:00:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:00:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:00:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:00:20 sync.(*WaitGroup).Go.func1
+2026-09-03T04:00:20 	sync/waitgroup.go:258
+2026-09-03T04:00:40 2026-09-03T04:00:40.285Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:00:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:00:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:00:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:00:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:00:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:00:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:00:40 sync.(*WaitGroup).Go.func1
+2026-09-03T04:00:40 	sync/waitgroup.go:258
+2026-09-03T04:00:45 2026-09-03T04:00:45.287Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:00:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:00:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:00:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:00:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:00:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:00:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:00:45 sync.(*WaitGroup).Go.func1
+2026-09-03T04:00:45 	sync/waitgroup.go:258
+2026-09-03T04:00:50 2026-09-03T04:00:50.286Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:00:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:00:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:00:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:00:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:00:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:00:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:00:50 sync.(*WaitGroup).Go.func1
+2026-09-03T04:00:50 	sync/waitgroup.go:258
+2026-09-03T04:01:10 2026-09-03T04:01:10.290Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:01:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:01:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:01:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:01:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:01:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:01:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:01:10 sync.(*WaitGroup).Go.func1
+2026-09-03T04:01:10 	sync/waitgroup.go:258
+2026-09-03T04:01:15 2026-09-03T04:01:15.290Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:01:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:01:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:01:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:01:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:01:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:01:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:01:15 sync.(*WaitGroup).Go.func1
+2026-09-03T04:01:15 	sync/waitgroup.go:258
+2026-09-03T04:01:20 2026-09-03T04:01:20.291Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:01:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:01:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:01:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:01:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:01:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:01:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:01:20 sync.(*WaitGroup).Go.func1
+2026-09-03T04:01:20 	sync/waitgroup.go:258
+2026-09-03T04:01:40 2026-09-03T04:01:40.295Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:01:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:01:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:01:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:01:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:01:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:01:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:01:40 sync.(*WaitGroup).Go.func1
+2026-09-03T04:01:40 	sync/waitgroup.go:258
+2026-09-03T04:01:45 2026-09-03T04:01:45.295Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:01:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:01:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:01:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:01:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:01:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:01:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:01:45 sync.(*WaitGroup).Go.func1
+2026-09-03T04:01:45 	sync/waitgroup.go:258
+2026-09-03T04:01:50 2026-09-03T04:01:50.296Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:01:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:01:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:01:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:01:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:01:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:01:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:01:50 sync.(*WaitGroup).Go.func1
+2026-09-03T04:01:50 	sync/waitgroup.go:258
+2026-09-03T04:02:10 2026-09-03T04:02:10.297Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:02:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:02:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:02:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:02:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:02:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:02:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:02:10 sync.(*WaitGroup).Go.func1
+2026-09-03T04:02:10 	sync/waitgroup.go:258
+2026-09-03T04:02:15 2026-09-03T04:02:15.296Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:02:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:02:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:02:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:02:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:02:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:02:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:02:15 sync.(*WaitGroup).Go.func1
+2026-09-03T04:02:15 	sync/waitgroup.go:258
+2026-09-03T04:02:20 2026-09-03T04:02:20.298Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:02:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:02:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:02:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:02:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:02:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:02:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:02:20 sync.(*WaitGroup).Go.func1
+2026-09-03T04:02:20 	sync/waitgroup.go:258
+2026-09-03T04:02:40 2026-09-03T04:02:40.293Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:02:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:02:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:02:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:02:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:02:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:02:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:02:40 sync.(*WaitGroup).Go.func1
+2026-09-03T04:02:40 	sync/waitgroup.go:258
+2026-09-03T04:02:45 2026-09-03T04:02:45.302Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:02:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:02:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:02:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:02:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:02:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:02:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:02:45 sync.(*WaitGroup).Go.func1
+2026-09-03T04:02:45 	sync/waitgroup.go:258
+2026-09-03T04:02:50 2026-09-03T04:02:50.303Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:02:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:02:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:02:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:02:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:02:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:02:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:02:50 sync.(*WaitGroup).Go.func1
+2026-09-03T04:02:50 	sync/waitgroup.go:258
+2026-09-03T04:03:10 2026-09-03T04:03:10.317Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:03:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:03:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:03:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:03:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:03:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:03:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:03:10 sync.(*WaitGroup).Go.func1
+2026-09-03T04:03:10 	sync/waitgroup.go:258
+2026-09-03T04:03:15 2026-09-03T04:03:15.307Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:03:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:03:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:03:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:03:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:03:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:03:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:03:15 sync.(*WaitGroup).Go.func1
+2026-09-03T04:03:15 	sync/waitgroup.go:258
+2026-09-03T04:03:20 2026-09-03T04:03:20.308Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:03:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:03:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:03:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:03:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:03:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:03:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:03:20 sync.(*WaitGroup).Go.func1
+2026-09-03T04:03:20 	sync/waitgroup.go:258
+2026-09-03T04:03:40 2026-09-03T04:03:40.311Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:03:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:03:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:03:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:03:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:03:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:03:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:03:40 sync.(*WaitGroup).Go.func1
+2026-09-03T04:03:40 	sync/waitgroup.go:258
+2026-09-03T04:03:45 2026-09-03T04:03:45.312Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:03:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:03:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:03:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:03:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:03:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:03:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:03:45 sync.(*WaitGroup).Go.func1
+2026-09-03T04:03:45 	sync/waitgroup.go:258
+2026-09-03T04:03:50 2026-09-03T04:03:50.314Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:03:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:03:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:03:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:03:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:03:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:03:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:03:50 sync.(*WaitGroup).Go.func1
+2026-09-03T04:03:50 	sync/waitgroup.go:258
+2026-09-03T04:04:10 2026-09-03T04:04:10.314Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:04:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:04:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:04:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:04:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:04:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:04:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:04:10 sync.(*WaitGroup).Go.func1
+2026-09-03T04:04:10 	sync/waitgroup.go:258
+2026-09-03T04:04:15 2026-09-03T04:04:15.316Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:04:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:04:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:04:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:04:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:04:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:04:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:04:15 sync.(*WaitGroup).Go.func1
+2026-09-03T04:04:15 	sync/waitgroup.go:258
+2026-09-03T04:04:20 2026-09-03T04:04:20.317Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:04:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:04:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:04:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:04:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:04:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:04:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:04:20 sync.(*WaitGroup).Go.func1
+2026-09-03T04:04:20 	sync/waitgroup.go:258
+2026-09-03T04:04:40 2026-09-03T04:04:40.334Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:04:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:04:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:04:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:04:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:04:40 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:04:40 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:04:40 sync.(*WaitGroup).Go.func1
+2026-09-03T04:04:40 	sync/waitgroup.go:258
+2026-09-03T04:04:45 2026-09-03T04:04:45.323Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:04:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:04:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:04:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:04:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:04:45 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:04:45 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:04:45 sync.(*WaitGroup).Go.func1
+2026-09-03T04:04:45 	sync/waitgroup.go:258
+2026-09-03T04:04:50 2026-09-03T04:04:50.322Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:04:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:04:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:04:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:04:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:04:50 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:04:50 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:04:50 sync.(*WaitGroup).Go.func1
+2026-09-03T04:04:50 	sync/waitgroup.go:258
+2026-09-03T04:05:10 2026-09-03T04:05:10.322Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 3}
+2026-09-03T04:05:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:05:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:05:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:05:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:05:10 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:05:10 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:05:10 sync.(*WaitGroup).Go.func1
+2026-09-03T04:05:10 	sync/waitgroup.go:258
+2026-09-03T04:05:15 2026-09-03T04:05:15.322Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 24}
+2026-09-03T04:05:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:05:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:05:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:05:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:05:15 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:05:15 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:05:15 sync.(*WaitGroup).Go.func1
+2026-09-03T04:05:15 	sync/waitgroup.go:258
+2026-09-03T04:05:20 2026-09-03T04:05:20.321Z	error	internal/queue_sender.go:50	Exporting failed. Dropping data.	{"resource": {"service.instance.id": "ec0868f1-4339-4ce1-9668-61c9acec1483", "service.name": "aws-otel-collector", "service.version": "v0.50.0"}, "otelcol.component.id": "otlphttp/traces", "otelcol.component.kind": "exporter", "otelcol.signal": "traces", "error": "not retryable error: Permanent error: rpc error: code = InvalidArgument desc = error exporting items, request to https://xray.us-east-1.amazonaws.com/v1/traces responded with HTTP Status Code 400, Message=The OTLP API is supported with CloudWatch Logs as a Trace Segment Destination. Please enable the CloudWatch Logs destination for your traces using the UpdateTraceSegmentDestination API (https://docs.aws.amazon.com/xray/latest/api/API_UpdateTraceSegmentDestination.html), Details=[]", "dropped_items": 6}
+2026-09-03T04:05:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal.NewQueueSender.func1
+2026-09-03T04:05:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue_sender.go:50
+2026-09-03T04:05:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queuebatch.(*disabledBatcher[...]).Consume
+2026-09-03T04:05:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queuebatch/disabled_batcher.go:23
+2026-09-03T04:05:20 go.opentelemetry.io/collector/exporter/exporterhelper/internal/queue.(*asyncQueue[...]).Start.func1
+2026-09-03T04:05:20 	go.opentelemetry.io/collector/exporter/exporterhelper@v0.158.0/internal/queue/async_queue.go:47
+2026-09-03T04:05:20 sync.(*WaitGroup).Go.func1
+2026-09-03T04:05:20 	sync/waitgroup.go:258
+=== LOG_GROUP=/otel/lab/application ===
+2026-09-03T03:59:22 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"23200320-5e0b-41bc-a240-4ca99ffa86cd","service.name":"data-service","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"opentelemetry.exporter.otlp.proto.grpc.exporter"},"timeUnixNano":1788407962468626176,"observedTimeUnixNano":1788407962468685774,"severityNumber":17,"severityText":"ERROR","body":"Failed to export traces to adot-collector.observability.local:4317, error code: StatusCode.DEADLINE_EXCEEDED, error details: Deadline Exceeded","attributes":{"code.file.path":"/usr/local/lib/python3.12/site-packages/opentelemetry/exporter/otlp/proto/grpc/exporter.py","code.function.name":"_export","code.line.number":513},"traceId":"","spanId":""}
+2026-09-03T03:59:30 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"23200320-5e0b-41bc-a240-4ca99ffa86cd","service.name":"data-service","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"opentelemetry.exporter.otlp.proto.grpc.exporter"},"timeUnixNano":1788407970423147520,"observedTimeUnixNano":1788407970423208366,"severityNumber":13,"severityText":"WARN","body":"Transient error StatusCode.UNAVAILABLE encountered while exporting metrics to adot-collector.observability.local:4317, retrying in 1.15s. Error details: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.20.1.126:4317: tcp handshaker shutdown","attributes":{"code.file.path":"/usr/local/lib/python3.12/site-packages/opentelemetry/exporter/otlp/proto/grpc/exporter.py","code.function.name":"_export","code.line.number":526},"traceId":"","spanId":""}
+2026-09-03T03:59:34 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"3f1ae57e-5bf5-453b-8ffb-0278f6824a02","service.name":"servicio-b","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"opentelemetry.exporter.otlp.proto.grpc.exporter"},"timeUnixNano":1788407974034053120,"observedTimeUnixNano":1788407974034094310,"severityNumber":13,"severityText":"WARN","body":"Transient error StatusCode.UNAVAILABLE encountered while exporting metrics to adot-collector.observability.local:4317, retrying in 0.82s. Error details: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.20.1.126:4317: tcp handshaker shutdown","attributes":{"code.file.path":"/usr/local/lib/python3.12/site-packages/opentelemetry/exporter/otlp/proto/grpc/exporter.py","code.function.name":"_export","code.line.number":526},"traceId":"","spanId":""}
+2026-09-03T03:59:40 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"bb86e5bb-3f52-4526-abf3-1133f22d6ade","service.name":"servicio-a","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"opentelemetry.exporter.otlp.proto.grpc.exporter"},"timeUnixNano":1788407980224691968,"observedTimeUnixNano":1788407980224748408,"severityNumber":17,"severityText":"ERROR","body":"Failed to export logs to adot-collector.observability.local:4317, error code: StatusCode.DEADLINE_EXCEEDED, error details: Deadline Exceeded","attributes":{"code.file.path":"/usr/local/lib/python3.12/site-packages/opentelemetry/exporter/otlp/proto/grpc/exporter.py","code.function.name":"_export","code.line.number":513},"traceId":"","spanId":""}
+2026-09-03T04:05:10 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"3f1ae57e-5bf5-453b-8ffb-0278f6824a02","service.name":"servicio-b","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"app.repository"},"timeUnixNano":1788408310420040448,"observedTimeUnixNano":1788408310420092778,"severityNumber":9,"severityText":"INFO","body":"Buscando cliente 1 en la base de datos","attributes":{"code.file.path":"/app/app/repository.py","code.function.name":"get_cliente","code.line.number":22},"flags":3,"traceId":"ba938be8560f8d6b9849939219bdb211","spanId":"78537b57b745ef3f"}
+2026-09-03T04:05:10 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"3f1ae57e-5bf5-453b-8ffb-0278f6824a02","service.name":"servicio-b","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"app.repository"},"timeUnixNano":1788408310430531840,"observedTimeUnixNano":1788408310430586435,"severityNumber":9,"severityText":"INFO","body":"Cliente 1 encontrado correctamente","attributes":{"code.file.path":"/app/app/repository.py","code.function.name":"get_cliente","code.line.number":63},"flags":3,"traceId":"ba938be8560f8d6b9849939219bdb211","spanId":"78537b57b745ef3f"}
+2026-09-03T04:05:10 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"bb86e5bb-3f52-4526-abf3-1133f22d6ade","service.name":"servicio-a","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"httpx"},"timeUnixNano":1788408310433909504,"observedTimeUnixNano":1788408310433969332,"severityNumber":9,"severityText":"INFO","body":"HTTP Request: GET http://service-b:8001/clientes/1 \"HTTP/1.1 200 OK\"","attributes":{"code.file.path":"/usr/local/lib/python3.12/site-packages/httpx/_client.py","code.function.name":"_send_single_request","code.line.number":1740},"flags":3,"traceId":"ba938be8560f8d6b9849939219bdb211","spanId":"cdff2f8bb0c6acc4"}
+2026-09-03T04:05:10 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"23200320-5e0b-41bc-a240-4ca99ffa86cd","service.name":"data-service","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"app.main"},"timeUnixNano":1788408310487083520,"observedTimeUnixNano":1788408310487139186,"severityNumber":9,"severityText":"INFO","body":"Order created","attributes":{"event_name":"order.created","outcome":"success","code.file.path":"/app/app/main.py","code.function.name":"create_order","code.line.number":114},"flags":3,"traceId":"ba938be8560f8d6b9849939219bdb211","spanId":"f35aa60554f7ac8e"}
+2026-09-03T04:05:10 {"resource":{"attributes":{"telemetry.sdk.language":"python","telemetry.sdk.name":"opentelemetry","telemetry.sdk.version":"1.44.0","service.instance.id":"bb86e5bb-3f52-4526-abf3-1133f22d6ade","service.name":"servicio-a","deployment.environment":"aws","telemetry.platform":"ecs-fargate","cloud.provider":"aws"}},"scope":{"name":"httpx"},"timeUnixNano":1788408310551284480,"observedTimeUnixNano":1788408310551331726,"severityNumber":9,"severityText":"INFO","body":"HTTP Request: POST http://data-service:8002/pedidos \"HTTP/1.1 201 Created\"","attributes":{"code.file.path":"/usr/local/lib/python3.12/site-packages/httpx/_client.py","code.function.name":"_send_single_request","code.line.number":1740},"flags":3,"traceId":"ba938be8560f8d6b9849939219bdb211","spanId":"b10ac811bf9922ec"}

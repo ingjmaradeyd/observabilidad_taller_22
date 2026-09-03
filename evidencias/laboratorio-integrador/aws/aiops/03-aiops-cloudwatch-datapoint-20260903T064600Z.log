@@ -1,0 +1,12 @@
+=== METRIC DATA ===
+metric=DataServiceChaosErrors
+sum=3.0
+timestamp=2026-09-03T06:46:00Z
+=== ALARM STATES ===
+alarm=otel-fargate-lab-lab-data-service-chaos-errors-anomaly
+state=OK
+reason="Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching]."
+alarm=otel-fargate-lab-lab-data-service-chaos-errors-static
+state=ALARM
+reason="Threshold Crossed: 1 datapoint [3.0 (03/09/26 06:46:00)] was greater than or equal to the threshold (1.0)."
+NOTE=The static control alarm detected the three controlled errors. The anomaly alarm remained OK because its model has not learned enough datapoints yet.

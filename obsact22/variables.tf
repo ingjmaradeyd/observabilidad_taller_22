@@ -45,6 +45,23 @@ variable "data_service_cpu" {
   }
 }
 
+variable "data_service_chaos_enabled" {
+  description = "Whether controlled error injection is enabled for data-service order creation."
+  type        = bool
+  default     = false
+}
+
+variable "data_service_chaos_error_rate" {
+  description = "Fraction of data-service order creations that return a controlled error when chaos is enabled."
+  type        = number
+  default     = 0.10
+
+  validation {
+    condition     = var.data_service_chaos_error_rate >= 0 && var.data_service_chaos_error_rate <= 1
+    error_message = "data-service chaos error rate must be between 0 and 1."
+  }
+}
+
 variable "data_service_desired_count" {
   description = "Desired number of data-service tasks. Keep 0 until the image is pushed and RDS is initialized."
   type        = number
@@ -137,6 +154,26 @@ variable "service_b_image_tag" {
   }
 }
 
+variable "service_b_chaos_enabled" {
+  description = "Whether controlled latency injection is enabled for service B customer lookups."
+  type        = bool
+  default     = false
+}
+
+variable "service_b_chaos_latency_ms" {
+  description = "Controlled latency in milliseconds injected before service B customer lookups."
+  type        = number
+  default     = 0
+
+  validation {
+    condition = (
+      var.service_b_chaos_latency_ms >= 0 &&
+      floor(var.service_b_chaos_latency_ms) == var.service_b_chaos_latency_ms
+    )
+    error_message = "Service B chaos latency must be a non-negative integer."
+  }
+}
+
 variable "service_a_desired_count" {
   description = "Desired number of service A tasks. Keep 0 until the image is pushed."
   type        = number
@@ -214,7 +251,7 @@ variable "adot_memory" {
 }
 
 variable "adot_desired_count" {
-  description = "Number of ADOT Collector tasks"
+  description = "Number of ADOT Collector tasks to run after its image is available"
   type        = number
-  default     = 0
+  default     = 1
 }

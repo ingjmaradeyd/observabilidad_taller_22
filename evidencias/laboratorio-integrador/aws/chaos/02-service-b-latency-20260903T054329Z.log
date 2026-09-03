@@ -1,0 +1,47 @@
+TIMESTAMP_UTC=20260903T054329Z
+SERVICE=otel-fargate-lab-lab-service-b
+TASK_DEFINITION_REVISION=3
+=== CHAOS CONFIGURATION ===
+ALB_DNS=otel-fargate-lab-lab-alb-1054318105.us-east-1.elb.amazonaws.com
+=== HEALTH ===
+{"message":"Servicio Clientes - A","status":"EJECUTANDO"}
+=== LATENCY REQUESTS ===
+request=1 http=200 latency_seconds=0.732103
+request=2 http=200 latency_seconds=0.432071
+request=3 http=200 latency_seconds=0.413719
+request=4 http=200 latency_seconds=0.416122
+request=5 http=200 latency_seconds=0.434084
+request=6 http=200 latency_seconds=0.420353
+request=7 http=200 latency_seconds=0.477944
+request=8 http=200 latency_seconds=0.414353
+request=9 http=200 latency_seconds=0.425299
+request=10 http=200 latency_seconds=0.417261
+request=11 http=200 latency_seconds=0.422727
+request=12 http=200 latency_seconds=0.482287
+request=13 http=200 latency_seconds=0.497441
+request=14 http=200 latency_seconds=0.417046
+request=15 http=200 latency_seconds=0.469031
+request=16 http=200 latency_seconds=0.493973
+request=17 http=200 latency_seconds=0.415637
+request=18 http=200 latency_seconds=0.415526
+request=19 http=200 latency_seconds=0.420847
+request=20 http=200 latency_seconds=0.423515
+request=21 http=200 latency_seconds=0.414042
+request=22 http=200 latency_seconds=0.435253
+request=23 http=200 latency_seconds=0.423047
+request=24 http=200 latency_seconds=0.426044
+request=25 http=200 latency_seconds=0.419754
+request=26 http=200 latency_seconds=0.416031
+request=27 http=200 latency_seconds=0.436278
+request=28 http=200 latency_seconds=0.412922
+request=29 http=200 latency_seconds=0.415030
+request=30 http=200 latency_seconds=0.516939
+TOTAL_REQUESTS=30
+SUCCESSFUL_REQUESTS=30
+ERROR_REQUESTS=8
+LATENCY_P95_SECONDS=0.516939
+BASELINE_P95_SECONDS=0.522669
+EXPECTED_INJECTED_LATENCY_SECONDS=0.200
+=== SERVICE B CHAOS LOGS ===
+[]
+EVIDENCE_PATH=evidencias/laboratorio-integrador/aws/chaos/02-service-b-latency-20260903T054329Z.log

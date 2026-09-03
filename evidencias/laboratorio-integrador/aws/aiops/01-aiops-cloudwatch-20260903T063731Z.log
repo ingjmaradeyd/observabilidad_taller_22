@@ -1,0 +1,18 @@
+# Reconstructed from operator terminal output; original tee failed because the aiops evidence directory did not exist.
+TIMESTAMP_UTC=20260903T063731Z
+=== METRIC FILTER ===
+DescribeMetricFilters
+metric=DataServiceChaosErrors
+name=otel-fargate-lab-lab-data-service-chaos-errors
+namespace=otel-fargate-lab-lab/AIOps
+pattern="Controlled order failure injected"
+=== AIOPS ALARMS ===
+name=otel-fargate-lab-lab-data-service-chaos-errors-anomaly
+reason="Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching]."
+state=OK
+name=otel-fargate-lab-lab-data-service-chaos-errors-static
+reason="Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching]."
+state=OK
+=== AIOPS METRICS ===
+ListMetrics: empty
+EVIDENCE_PATH=evidencias/laboratorio-integrador/aws/aiops/01-aiops-cloudwatch-20260903T063731Z.log

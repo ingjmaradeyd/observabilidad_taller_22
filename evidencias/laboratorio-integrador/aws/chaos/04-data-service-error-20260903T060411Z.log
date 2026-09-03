@@ -1,0 +1,44 @@
+EXPERIMENT_START_UTC=20260903T060411Z
+EXPERIMENT=data-service-error-rate
+CONFIGURED_ERROR_RATE=0.10
+TOTAL_REQUESTS_PLANNED=30
+request=1 http=200 body={"id_pedidos":95,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-1","cantidad":1,"valor":1000.0}
+request=2 http=200 body={"id_pedidos":96,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-2","cantidad":1,"valor":1000.0}
+request=3 http=200 body={"id_pedidos":97,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-3","cantidad":1,"valor":1000.0}
+request=4 http=200 body={"id_pedidos":98,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-4","cantidad":1,"valor":1000.0}
+request=5 http=200 body={"id_pedidos":99,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-5","cantidad":1,"valor":1000.0}
+request=6 http=200 body={"id_pedidos":100,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-6","cantidad":1,"valor":1000.0}
+request=7 http=200 body={"id_pedidos":101,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-7","cantidad":1,"valor":1000.0}
+request=8 http=200 body={"id_pedidos":102,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-8","cantidad":1,"valor":1000.0}
+request=9 http=200 body={"id_pedidos":103,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-9","cantidad":1,"valor":1000.0}
+request=10 http=200 body={"id_pedidos":104,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-10","cantidad":1,"valor":1000.0}
+request=11 http=200 body={"id_pedidos":105,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-11","cantidad":1,"valor":1000.0}
+request=12 http=200 body={"id_pedidos":106,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-12","cantidad":1,"valor":1000.0}
+request=13 http=200 body={"id_pedidos":107,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-13","cantidad":1,"valor":1000.0}
+request=14 http=200 body={"id_pedidos":108,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-14","cantidad":1,"valor":1000.0}
+request=15 http=200 body={"id_pedidos":109,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-15","cantidad":1,"valor":1000.0}
+request=16 http=200 body={"id_pedidos":110,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-16","cantidad":1,"valor":1000.0}
+request=17 http=200 body={"id_pedidos":111,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-17","cantidad":1,"valor":1000.0}
+request=18 http=200 body={"id_pedidos":112,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-18","cantidad":1,"valor":1000.0}
+request=19 http=200 body={"id_pedidos":113,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-19","cantidad":1,"valor":1000.0}
+request=20 http=200 body={"id_pedidos":114,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-20","cantidad":1,"valor":1000.0}
+request=21 http=200 body={"id_pedidos":115,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-21","cantidad":1,"valor":1000.0}
+request=22 http=200 body={"id_pedidos":116,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-22","cantidad":1,"valor":1000.0}
+request=23 http=200 body={"id_pedidos":117,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-23","cantidad":1,"valor":1000.0}
+request=24 http=200 body={"id_pedidos":118,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-24","cantidad":1,"valor":1000.0}
+request=25 http=200 body={"id_pedidos":119,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-25","cantidad":1,"valor":1000.0}
+request=26 http=200 body={"id_pedidos":120,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-26","cantidad":1,"valor":1000.0}
+request=27 http=200 body={"id_pedidos":121,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-27","cantidad":1,"valor":1000.0}
+request=28 http=200 body={"id_pedidos":122,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-28","cantidad":1,"valor":1000.0}
+request=29 http=200 body={"id_pedidos":123,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-29","cantidad":1,"valor":1000.0}
+request=30 http=200 body={"id_pedidos":124,"id_cliente":1,"producto":"Chaos data-service 20260903T060411Z-30","cantidad":1,"valor":1000.0}
+TOTAL_REQUESTS=30
+SUCCESSFUL_REQUESTS=30
+ERROR_REQUESTS=0
+awk: syntax error at source line 1
+ context is
+	BEGIN {printf >>>  \ <<< "%.2f\", e/30*100}
+awk: illegal statement at source line 1
+OBSERVED_ERROR_RATE_PERCENT=
+=== CHAOS LOGS ===
+[]

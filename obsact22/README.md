@@ -87,6 +87,47 @@ Secuencia prevista, siempre con revisión humana antes de aplicar:
 
 No se debe incrementar un conteo si su imagen no existe en ECR. Service A tampoco debe iniciarse hasta que B, `data-service` y el esquema requerido estén disponibles.
 
+## Migración one-shot de RDS
+
+Terraform crea la definición `rds-migrator`, pero **no crea un servicio ECS** ni ejecuta la migración automáticamente. La tarea reutiliza la imagen ya publicada de `data-service`, inyecta la contraseña administrada únicamente mediante el execution role y termina después de crear/actualizar de forma idempotente `clientes`, `pedidos`, `idempotency_key`, `request_fingerprint`, el índice único y el cliente semilla. No imprime credenciales ni SQL sensible.
+
+Después de aplicar el plan aprobado y de publicar la imagen de `data-service` con la etiqueta configurada, ejecutá estos comandos desde `obsact22`:
+
+```bash
+CLUSTER_NAME="$(terraform output -raw ecs_cluster_name)"
+TASK_DEFINITION="$(terraform output -raw rds_migrator_task_definition_arn)"
+SECURITY_GROUP_ID="$(terraform output -raw rds_migrator_security_group_id)"
+SUBNET_IDS="$(terraform output -json rds_migrator_subnet_ids | jq -r 'join(",")')"
+
+TASK_ARN="$(aws ecs run-task \
+  --cluster "$CLUSTER_NAME" \
+  --launch-type FARGATE \
+  --task-definition "$TASK_DEFINITION" \
+  --network-configuration "awsvpcConfiguration={subnets=[$SUBNET_IDS],securityGroups=[$SECURITY_GROUP_ID],assignPublicIp=ENABLED}" \
+  --query 'tasks[0].taskArn' \
+  --output text)"
+
+test "$TASK_ARN" != "None"
+aws ecs wait tasks-stopped --cluster "$CLUSTER_NAME" --tasks "$TASK_ARN"
+aws ecs describe-tasks \
+  --cluster "$CLUSTER_NAME" \
+  --tasks "$TASK_ARN" \
+  --query 'tasks[0].{lastStatus:lastStatus,stoppedReason:stoppedReason,containers:containers[].{name:name,exitCode:exitCode,reason:reason}}'
+```
+
+Un estado `STOPPED` es normal para una tarea one-shot; el contenedor debe terminar con `exitCode: 0`. Validá también el mensaje de éxito, que solo aparece cuando las dos tablas, las dos columnas `NOT NULL`, el índice único y el cliente `id_cliente=1` fueron comprobados dentro de la misma transacción:
+
+```bash
+LOG_GROUP="$(terraform output -raw rds_migrator_log_group_name)"
+TASK_ID="${TASK_ARN##*/}"
+aws logs filter-log-events \
+  --log-group-name "$LOG_GROUP" \
+  --log-stream-name-prefix "ecs/rds-migrator/$TASK_ID" \
+  --filter-pattern '"RDS schema migration and validation completed successfully."'
+```
+
+La tarea usa las mismas subredes públicas y `assignPublicIp=ENABLED` que los servicios del laboratorio únicamente para descargar la imagen y publicar logs. Su security group no tiene ingreso y solo permite salida DNS, HTTPS necesaria para AWS y PostgreSQL hacia RDS en el puerto 5432. En producción, reemplazá esta concesión temporal por subredes privadas con NAT o VPC endpoints.
+
 ## Variables principales
 
 | Variable | Uso | Valor inicial |
@@ -113,4 +154,4 @@ Antes de considerar funcional esta arquitectura se debe comprobar en AWS:
 - La creación de un pedido recorre A -> B -> data -> RDS.
 - Los logs del proxy de Service Connect aparecen en el log group de retención limitada.
 
-Hasta ejecutar estas comprobaciones, la unidad debe describirse como **implementada y validada localmente en Terraform**, no como desplegada o probada en AWS.
+La infraestructura base ya está desplegada en AWS; hasta ejecutar estas comprobaciones, la unidad debe describirse como **desplegada parcialmente**, no como funcional end-to-end ni validada en producción simulada.

@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "service_a" {
         },
         {
           name  = "OTEL_ENABLED"
-          value = "false"
+          value = "true"
         },
         {
           name  = "OTEL_EXPORTER_OTLP_ENDPOINT"
@@ -91,6 +91,14 @@ resource "aws_ecs_task_definition" "service_b" {
 
       environment = [
         {
+          name  = "CHAOS_ENABLED"
+          value = tostring(var.service_b_chaos_enabled)
+        },
+        {
+          name  = "CHAOS_LATENCY_MS"
+          value = tostring(var.service_b_chaos_latency_ms)
+        },
+        {
           name  = "DB_HOST"
           value = aws_db_instance.postgres.address
         },
@@ -108,7 +116,7 @@ resource "aws_ecs_task_definition" "service_b" {
         },
         {
           name  = "OTEL_ENABLED"
-          value = "false"
+          value = "true"
         },
         {
           name  = "OTEL_EXPORTER_OTLP_ENDPOINT"
@@ -179,6 +187,14 @@ resource "aws_ecs_task_definition" "data_service" {
 
       environment = [
         {
+          name  = "CHAOS_ENABLED"
+          value = tostring(var.data_service_chaos_enabled)
+        },
+        {
+          name  = "CHAOS_ERROR_RATE"
+          value = tostring(var.data_service_chaos_error_rate)
+        },
+        {
           name  = "DB_HOST"
           value = aws_db_instance.postgres.address
         },
@@ -196,15 +212,11 @@ resource "aws_ecs_task_definition" "data_service" {
         },
         {
           name  = "OTEL_ENABLED"
-          value = "false"
+          value = "true"
         },
         {
           name  = "OTEL_EXPORTER_OTLP_ENDPOINT"
           value = "adot-collector.${aws_service_discovery_private_dns_namespace.observability.name}:4317"
-        },
-        {
-          name  = "CHAOS_ENABLED"
-          value = "false"
         }
       ]
 
@@ -245,11 +257,12 @@ resource "aws_ecs_task_definition" "data_service" {
 }
 
 resource "aws_ecs_service" "service_a" {
-  name            = "${local.name}-service-a"
-  cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.service_a.arn
-  desired_count   = var.service_a_desired_count
-  launch_type     = "FARGATE"
+  name                   = "${local.name}-service-a"
+  cluster                = aws_ecs_cluster.main.id
+  task_definition        = aws_ecs_task_definition.service_a.arn
+  desired_count          = var.service_a_desired_count
+  enable_execute_command = true
+  launch_type            = "FARGATE"
 
   network_configuration {
     subnets          = aws_subnet.public[*].id

@@ -1,0 +1,37 @@
+EXPERIMENT_START_UTC=20260903T064626Z
+EXPERIMENT=data-service-error-rate-for-aiops
+TARGET_PATH=service-a-ECS-Exec-to-data-service-private-IP
+request=1 http=201
+request=2 http=201
+request=3 http=201
+request=4 http=201
+request=5 http=201
+request=6 http=201
+request=7 http=201
+request=8 http=201
+request=9 http=201
+request=10 http=503 body={"code":"CHAOS_INJECTED","message":"Controlled failure injected"}
+request=11 http=201
+request=12 http=201
+request=13 http=201
+request=14 http=201
+request=15 http=201
+request=16 http=201
+request=17 http=201
+request=18 http=201
+request=19 http=201
+request=20 http=503 body={"code":"CHAOS_INJECTED","message":"Controlled failure injected"}
+request=21 http=201
+request=22 http=201
+request=23 http=201
+request=24 http=201
+request=25 http=201
+request=26 http=201
+request=27 http=201
+request=28 http=201
+request=29 http=201
+request=30 http=503 body={"code":"CHAOS_INJECTED","message":"Controlled failure injected"}
+TOTAL_REQUESTS=30
+SUCCESSFUL_REQUESTS=27
+ERROR_REQUESTS=3
+OBSERVED_ERROR_RATE_PERCENT=10.00

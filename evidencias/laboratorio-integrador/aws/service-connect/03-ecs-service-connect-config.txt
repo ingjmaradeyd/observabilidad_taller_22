@@ -1,0 +1,198 @@
+[
+    {
+        "name": "otel-fargate-lab-lab-service-a",
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "running": 1,
+                "desired": 1,
+                "rollout": "COMPLETED",
+                "serviceConnect": {
+                    "enabled": true,
+                    "namespace": "arn:aws:servicediscovery:us-east-1:<ACCOUNT_ID>:namespace/ns-pthj2plyxkggnjsc",
+                    "services": [],
+                    "logConfiguration": {
+                        "logDriver": "awslogs",
+                        "options": {
+                            "awslogs-group": "/ecs/otel-fargate-lab-lab/service-connect",
+                            "awslogs-region": "us-east-1",
+                            "awslogs-stream-prefix": "service-a"
+                        },
+                        "secretOptions": []
+                    }
+                },
+                "resources": [
+                    {
+                        "discoveryName": "aws-ecs-sc.client.531f6f91-09c3-3591-ae28-734539fefac3.otel-fargate-lab-lab-service-a",
+                        "discoveryArn": "arn:aws:servicediscovery:us-east-1:<ACCOUNT_ID>:service/srv-g7kjh34d3v3dxdsp"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "otel-fargate-lab-lab-service-b",
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "running": 1,
+                "desired": 1,
+                "rollout": "COMPLETED",
+                "serviceConnect": {
+                    "enabled": true,
+                    "namespace": "arn:aws:servicediscovery:us-east-1:<ACCOUNT_ID>:namespace/ns-pthj2plyxkggnjsc",
+                    "services": [
+                        {
+                            "portName": "service-b-http",
+                            "discoveryName": "service-b",
+                            "clientAliases": [
+                                {
+                                    "port": 8001,
+                                    "dnsName": "service-b"
+                                }
+                            ]
+                        }
+                    ],
+                    "logConfiguration": {
+                        "logDriver": "awslogs",
+                        "options": {
+                            "awslogs-group": "/ecs/otel-fargate-lab-lab/service-connect",
+                            "awslogs-region": "us-east-1",
+                            "awslogs-stream-prefix": "service-b"
+                        },
+                        "secretOptions": []
+                    }
+                },
+:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[
+    {
+        "name": "otel-fargate-lab-lab-service-a",
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "running": 1,
+                "desired": 1,
+                "rollout": "COMPLETED",
+                "serviceConnect": {
+                    "enabled": true,
+                    "namespace": "arn:aws:servicediscovery:us-east-1:<ACCOUNT_ID>:namespace/ns-pthj2plyxkggnjsc",
+                    "services": [],
+                    "logConfiguration": {
+                        "logDriver": "awslogs",
+                        "options": {
+                            "awslogs-group": "/ecs/otel-fargate-lab-lab/service-connect",
+                            "awslogs-region": "us-east-1",
+                            "awslogs-stream-prefix": "service-a"
+                        },
+                        "secretOptions": []
+                    }
+                },
+                "resources": [
+                    {
+                        "discoveryName": "aws-ecs-sc.client.531f6f91-09c3-3591-ae28-734539fefac3.otel-fargate-lab-lab-service-a",
+                        "discoveryArn": "arn:aws:servicediscovery:us-east-1:<ACCOUNT_ID>:service/srv-g7kjh34d3v3dxdsp"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "otel-fargate-lab-lab-service-b",
+        "deployments": [
+            {
+                "status": "PRIMARY",
+                "running": 1,
+                "desired": 1,
+                "rollout": "COMPLETED",
+                "serviceConnect": {
+                    "enabled": true,
+                    "namespace": "arn:aws:servicediscovery:us-east-1:<ACCOUNT_ID>:namespace/ns-pthj2plyxkggnjsc",
+                    "services": [
+                        {
+                            "portName": "service-b-http",
+                            "discoveryName": "service-b",
+                            "clientAliases": [
+                                {
+                                    "port": 8001,
+                                    "dnsName": "service-b"
+                                }
+                            ]
+                        }
+                    ],
+                    "logConfiguration": {
+                        "logDriver": "awslogs",
+                        "options": {
+                            "awslogs-group": "/ecs/otel-fargate-lab-lab/service-connect",
+                            "awslogs-region": "us-east-1",
+                            "awslogs-stream-prefix": "service-b"
+                        },
+                        "secretOptions": []
+                    }
+                },
+:

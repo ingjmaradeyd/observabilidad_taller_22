@@ -93,6 +93,15 @@ resource "aws_vpc_security_group_egress_rule" "service_a_to_data_service" {
   ip_protocol                  = "tcp"
 }
 
+resource "aws_vpc_security_group_egress_rule" "service_a_to_adot_grpc" {
+  security_group_id            = aws_security_group.service_a.id
+  description                  = "OTLP gRPC telemetry from Service A to ADOT Collector."
+  referenced_security_group_id = aws_security_group.adot.id
+  from_port                    = 4317
+  to_port                      = 4317
+  ip_protocol                  = "tcp"
+}
+
 resource "aws_vpc_security_group_egress_rule" "service_a_https" {
   security_group_id = aws_security_group.service_a.id
   description       = "HTTPS to required AWS and external services."
@@ -135,6 +144,15 @@ resource "aws_vpc_security_group_egress_rule" "service_b_to_rds" {
   referenced_security_group_id = aws_security_group.rds.id
   from_port                    = 5432
   to_port                      = 5432
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "service_b_to_adot_grpc" {
+  security_group_id            = aws_security_group.service_b.id
+  description                  = "OTLP gRPC telemetry from Service B to ADOT Collector."
+  referenced_security_group_id = aws_security_group.adot.id
+  from_port                    = 4317
+  to_port                      = 4317
   ip_protocol                  = "tcp"
 }
 
@@ -183,6 +201,15 @@ resource "aws_vpc_security_group_egress_rule" "data_service_to_rds" {
   ip_protocol                  = "tcp"
 }
 
+resource "aws_vpc_security_group_egress_rule" "data_service_to_adot_grpc" {
+  security_group_id            = aws_security_group.data_service.id
+  description                  = "OTLP gRPC telemetry from data-service to ADOT Collector."
+  referenced_security_group_id = aws_security_group.adot.id
+  from_port                    = 4317
+  to_port                      = 4317
+  ip_protocol                  = "tcp"
+}
+
 resource "aws_vpc_security_group_egress_rule" "data_service_https" {
   security_group_id = aws_security_group.data_service.id
   description       = "HTTPS to required AWS and external services."
@@ -223,6 +250,61 @@ resource "aws_vpc_security_group_ingress_rule" "rds_from_data_service" {
   security_group_id            = aws_security_group.rds.id
   description                  = "PostgreSQL only from data-service."
   referenced_security_group_id = aws_security_group.data_service.id
+  from_port                    = 5432
+  to_port                      = 5432
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_security_group" "rds_migrator" {
+  name        = "${local.name}-rds-migrator-sg"
+  description = "Egress-only access for the one-shot RDS schema migrator."
+  vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = "${local.name}-rds-migrator-sg"
+  }
+}
+
+resource "aws_vpc_security_group_egress_rule" "rds_migrator_to_rds" {
+  security_group_id            = aws_security_group.rds_migrator.id
+  description                  = "PostgreSQL traffic from the one-shot migrator to RDS."
+  referenced_security_group_id = aws_security_group.rds.id
+  from_port                    = 5432
+  to_port                      = 5432
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "rds_migrator_https" {
+  security_group_id = aws_security_group.rds_migrator.id
+  description       = "HTTPS to required AWS services through the public task IP."
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "rds_migrator_dns_tcp" {
+  security_group_id = aws_security_group.rds_migrator.id
+  description       = "DNS over TCP through the VPC resolver."
+  cidr_ipv4         = var.vpc_cidr
+  from_port         = 53
+  to_port           = 53
+  ip_protocol       = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "rds_migrator_dns_udp" {
+  security_group_id = aws_security_group.rds_migrator.id
+  description       = "DNS over UDP through the VPC resolver."
+  cidr_ipv4         = var.vpc_cidr
+  from_port         = 53
+  to_port           = 53
+  ip_protocol       = "udp"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "rds_from_rds_migrator" {
+  security_group_id            = aws_security_group.rds.id
+  description                  = "PostgreSQL only from the one-shot RDS migrator."
+  referenced_security_group_id = aws_security_group.rds_migrator.id
   from_port                    = 5432
   to_port                      = 5432
   ip_protocol                  = "tcp"

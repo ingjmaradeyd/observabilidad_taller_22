@@ -1,0 +1,7 @@
+TIMESTAMP_UTC=20260903T020705Z
+=== SERVICE A HEALTH ===
+{"message":"Servicio Clientes - A","status":"EJECUTANDO"}
+HTTP_STATUS=200
+=== A -> B -> DATA-SERVICE -> RDS ===
+{"detail":{"code":"SERVICE_B_UNAVAILABLE","message":"Customer service is unavailable"}}
+HTTP_STATUS=503

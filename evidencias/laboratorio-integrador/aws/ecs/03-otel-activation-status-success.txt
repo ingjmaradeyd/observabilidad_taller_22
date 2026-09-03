@@ -1,0 +1,13 @@
+ECS telemetry activation verification
+
+Source: AWS CLI `ecs describe-services`
+Region: us-east-1
+
+| service | desired | running | pending | status |
+|---|---:|---:|---:|---|
+| lab-adot-collector | 1 | 1 | 0 | ACTIVE |
+| otel-fargate-lab-lab-service-a | 1 | 1 | 0 | ACTIVE |
+| otel-fargate-lab-lab-service-b | 1 | 1 | 0 | ACTIVE |
+| otel-fargate-lab-lab-data-service | 1 | 1 | 0 | ACTIVE |
+
+Result: ADOT and the three application services have one running task each and no pending tasks.
