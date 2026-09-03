@@ -338,8 +338,8 @@ Extender el laboratorio 2.2 hasta una solución observable desplegada exclusivam
 - [ ] Mostrar en la demostración: tres servicios en AWS, mesh, anomalía, alerta, dashboard de seguridad y chaos.
 - [x] Auditar el resultado contra la rúbrica y declarar explícitamente los criterios multicloud no cubiertos en el informe final y en la matriz de brechas.
 - [ ] Confirmar que el repositorio continúe público.
-- [ ] Crear el tag `v1.0` únicamente después de aprobar la auditoría final.
-- [ ] Publicar el tag y verificarlo remotamente.
+- [x] Crear el tag anotado `v1.0` después de aprobar la auditoría final.
+- [x] Publicar el tag `v1.0` en `origin` y verificar que apunta al commit de entrega.
 - [ ] Documentar el formato final de entrega cuando la plataforma o la docente lo especifique; no inventarlo.
 
 **Criterio de salida:** evidencia trazable, demostración ensayada, rúbrica completa y tag `v1.0` publicado.

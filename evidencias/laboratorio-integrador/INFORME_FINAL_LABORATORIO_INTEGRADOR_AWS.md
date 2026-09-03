@@ -160,16 +160,16 @@ La siguiente tabla es un **mapeo operativo de ocho dominios** para organizar la 
 - Comparación cuantitativa de ruido y accionabilidad entre control estático y detección dinámica.
 - AWS DevOps Guru, que no fue implementado.
 - Dashboard de seguridad, consultas N-S/E-W/entre servicios, CVEs y señal de autenticación fallida.
-- Validación oficial de los ocho dominios del blueprint, demostración final y tag `v1.0`.
+- Validación oficial de los ocho dominios del blueprint y demostración final.
 - Requisito multicloud: GCP/Cloud SQL permanece fuera de alcance.
 
 ## Conclusión
 
 La plataforma alcanza un estado parcialmente demostrado: hay arquitectura AWS funcional, telemetría distribuida, seguridad y red con señales iniciales, dos experimentos de caos, alarma estática con MTTD inferior a dos minutos y una cuantificación honesta del impacto sobre disponibilidad/error budget. Las brechas se mantienen visibles para que la revisión final valore evidencia comprobable, no resultados esperados.
 
-## Estado documental previo al tag
+## Estado documental de entrega
 
-La auditoría contra la rúbrica y la revisión de secretos/evidencias del paquete de entrega ya fueron completadas. La revisión confirmó que el informe mantiene el alcance AWS-only, declara las brechas multicloud y no presenta como completadas las capacidades aún no demostradas. La demostración técnica en vivo, la aprobación final, la creación del tag `v1.0` y la entrega continúan pendientes.
+La auditoría contra la rúbrica y la revisión de secretos/evidencias del paquete de entrega fueron completadas. El informe mantiene el alcance AWS-only, declara las brechas multicloud y no presenta como completadas las capacidades aún no demostradas. El tag anotado `v1.0` fue creado y publicado en `origin`; la demostración técnica en vivo y la entrega en la plataforma siguen pendientes.
 
 ## Key Learnings:
 
