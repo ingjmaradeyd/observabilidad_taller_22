@@ -134,7 +134,7 @@ La siguiente tabla es un **mapeo operativo de ocho dominios** para organizar la 
 5. Explicar por qué la banda `2σ` permanece `OK`: falta historial de aprendizaje.
 6. Revisar los dos experimentos, blast radius, rollback y la limitación del archivo 07.
 7. Mostrar Flow Logs y los estándares `READY` de Security Hub, diferenciando señales disponibles de dashboard pendiente.
-8. Cerrar con SLO/error budget, brechas abiertas y roadmap; indicar que la auditoría documental ya fue completada y que siguen pendientes la demostración en vivo, el tag `v1.0` y la entrega.
+8. Cerrar con SLO/error budget, brechas abiertas y roadmap; indicar que la auditoría documental y el tag `v1.0` ya fueron publicados, y que quedan pendientes la demostración en vivo y la carga en la plataforma.
 
 ## 11. Índice de evidencias
 
@@ -152,6 +152,12 @@ La siguiente tabla es un **mapeo operativo de ocho dominios** para organizar la 
 | SLO/error budget | `aws/aiops/04-slo-error-budget-analysis.md` | Análisis cuantitativo de la ventana. |
 | Red | `aws/network/01-vpc-flow-logs-20260903T044925Z.log` | Flow Logs, `ACCEPT/REJECT` y alarma. |
 | Seguridad | `aws/security-hub/01-standards-ready.json` | Estados `READY` sanitizados. |
+
+### 11.1 Anexo visual de evidencias
+
+El PDF final incorpora un anexo visual de 16 páginas, después del informe principal, donde las evidencias se presentan literalmente como imágenes: logs renderizados en estilo de terminal, JSON y capturas originales de Service Connect y Security Hub. Las evidencias extensas indican explícitamente el rango de líneas mostrado; no se presentan como resultados completos cuando son extractos.
+
+Archivo: `evidencias/laboratorio-integrador/INFORME_FINAL_LABORATORIO_INTEGRADOR_AWS.pdf` (24 páginas totales, 8 de informe + 16 de anexo).
 
 ## 12. Brechas restantes
 
